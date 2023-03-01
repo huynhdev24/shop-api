@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport({
     secure: false,
     auth: {
         type: 'OAuth2',
-        user: 'project.php.nhncomputer@gmail.com',
+        user: 'kiemtienonline2357@gmail.com',
         clientId: process.env.GOOGLE_GMAIL_CLIENT_ID,
         accessToken,
         clientSecret: process.env.GOOGLE_GMAIL_CLIENT_SECRET,
