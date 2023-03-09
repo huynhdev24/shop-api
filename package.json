@@ -4,6 +4,8 @@
   "description": "shop-api, nodejs, backend, api",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
+    "product": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -25,6 +27,7 @@
     "googleapis": "^111.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.0",
+    "mongoose-slug-generator": "^1.0.4",
     "nodemailer": "^6.9.1"
   },
   "devDependencies": {
