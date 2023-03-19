@@ -71,11 +71,11 @@ const orderController = {
             const link = `${host}/thanhtoan/momo/callback`
 
             const partnerCode = "MOMO";
-            const accessKey = "F8BBA842ECF85";
-            const secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
+            const accessKey = "imYC24phv0gYMFgA";
+            const secretkey = "gZ2H5gyDOrVLQ0mnVJjPCWQ4a2lenHLN";
             const requestId = paymentId;
             const orderId = requestId;
-            const orderInfo = "Thanh toán mua hàng tại BookStore";
+            const orderInfo = "Thanh toán mua hàng tại SmartShop";
             const redirectUrl = link;
             const ipnUrl = "https://callback.url/notify";
             const requestType = "captureWallet"
@@ -121,8 +121,8 @@ const orderController = {
             const { paymentId } = req.body
 
             const partnerCode = "MOMO";
-            const accessKey = "F8BBA842ECF85";
-            const secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
+            const accessKey = "imYC24phv0gYMFgA";
+            const secretkey = "gZ2H5gyDOrVLQ0mnVJjPCWQ4a2lenHLN";
 
             const rawSignature = "accessKey=" + accessKey + "&orderId=" + paymentId + "&partnerCode=" + partnerCode + "&requestId=" + paymentId
             const signature = crypto.createHmac('sha256', secretkey).update(rawSignature).digest('hex');
