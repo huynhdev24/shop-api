@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 //Disabled
-const slug = require('mongoose-slug-generator');
-mongoose.plugin(slug);
+// const slug = require('mongoose-slug-generator');
+const slugger = require('mongoose-slugger-plugin');
 
 const Schema = mongoose.Schema;
 
@@ -16,15 +16,14 @@ const bookSchema = new Schema({
         type: String,
         required: true
     },
-    slug: {
-        type: String,
-        slug: 'name',
-        unique: true
-    },
     // slug: {
     //     type: String,
+    //     slug: 'name',
     //     unique: true
-    // }
+    // },
+    slug: {
+        type: String,
+    },
     year: { type: Number },
     genre: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -50,5 +49,27 @@ const bookSchema = new Schema({
     timestamps: true
 })
 
+// create a unique index for slug generation;
+// here, the slugs must be unique for each name
+bookSchema.index({ name: 1, slug: 1 }, { name: 'name_slug', unique: true });
+// create the configuration
+const sluggerOptions = new slugger.SluggerOptions({
+    // the property path which stores the slug value
+    slugPath: 'slug',
+    // specify the properties which will be used for generating the slug
+    generateFrom: ['name', 'bookId'],
+    // specify the max length for the slug
+    maxLength: 30,
+    // the unique index, see above
+    index: 'name_slug'
+  });
+// add the plugin
+bookSchema.plugin(slugger.plugin, sluggerOptions);
 
-module.exports = mongoose.model('Book', bookSchema);
+module.exports = slugger.wrap(mongoose.model('Book', bookSchema));
+
+
+// Add plugins
+// mongoose.plugin(slug);
+
+// module.exports = mongoose.model('Book', bookSchema);
