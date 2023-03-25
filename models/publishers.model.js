@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const publisherSchema = new Schema({
     name: {
@@ -11,4 +11,4 @@ const publisherSchema = new Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Publisher', publisherSchema)
+module.exports = mongoose.model('Publisher', publisherSchema);

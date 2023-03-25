@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
-const slug = require('mongoose-slug-generator')
+const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
 
-mongoose.plugin(slug)
+mongoose.plugin(slug);
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const genreSchema = new Schema({
     name: {
@@ -20,4 +20,4 @@ const genreSchema = new Schema({
 })
 
 
-module.exports = mongoose.model('Genre', genreSchema)
+module.exports = mongoose.model('Genre', genreSchema);

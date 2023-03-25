@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const slug = require('mongoose-slug-generator')
+//Disabled
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
 
-mongoose.plugin(slug)
-
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
     bookId: {
@@ -21,6 +21,10 @@ const bookSchema = new Schema({
         slug: 'name',
         unique: true
     },
+    // slug: {
+    //     type: String,
+    //     unique: true
+    // }
     year: { type: Number },
     genre: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -47,4 +51,4 @@ const bookSchema = new Schema({
 })
 
 
-module.exports = mongoose.model('Book', bookSchema)
+module.exports = mongoose.model('Book', bookSchema);
