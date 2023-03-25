@@ -134,11 +134,11 @@ const authController = {
             const host = req.get('origin')
             const link = `${host}/services/user/verify?active_code=${code}`
             const resultSendMail = await transporter.sendMail({
-                from: '"BookStore" <kiemtienonline2357@gmail.com>',
+                from: '"SmartShop" <kiemtienonline2357@gmail.com>',
                 to: email,
-                subject: `[BookStore] Chúc mừng bạn đăng ký thành công!`,
+                subject: `[SmartShop] Chúc mừng bạn đăng ký thành công!`,
                 html: ` <h3>Xin chào ${fullName},</h3>
-                        <h3>Bạn vừa tiến hành đăng ký tài khoản tại BookStore!</h3>
+                        <h3>Bạn vừa tiến hành đăng ký tài khoản tại SmartShop!</h3>
                         <p>Chúc mừng bạn trở thành thành viên BookStore.</p>
                         <p>Username : ${email}</p>
                         <a href="${link}">Nhấn vào đây để kích hoạt</a>`
@@ -169,12 +169,12 @@ const authController = {
             const host = req.get('origin')
             const link = `${host}/services/user/verify?active_code=${code}`
             const resultSendMail = await transporter.sendMail({
-                from: '"BookStore" <kiemtienonline2357@gmail.com>',
+                from: '"SmartShop" <kiemtienonline2357@gmail.com>',
                 to: email,
-                subject: `[BookStore] Chúc mừng bạn đăng ký thành công!`,
+                subject: `[SmartShop] Chúc mừng bạn đăng ký thành công!`,
                 html: ` <h3>Xin chào ${user.fullName},</h3>
-                        <h3>Bạn vừa tiến hành đăng ký tài khoản tại BookStore!</h3>
-                        <p>Chúc mừng bạn trở thành thành viên BookStore.</p>
+                        <h3>Bạn vừa tiến hành đăng ký tài khoản tại SmartShop!</h3>
+                        <p>Chúc mừng bạn trở thành thành viên SmartShop.</p>
                         <p>Username : ${email}</p>
                         <a href="${link}">Nhấn vào đây để kích hoạt</a>`
             })
@@ -260,17 +260,17 @@ const authController = {
             const host = req.get('origin')
             const link = `${host}/dat-lai-mat-khau/${tokenReset}`
             const resultSendMail = await transporter.sendMail({
-                from: '"BOOKSTORE" <kiemtienonline2357@gmail.com>',
+                from: '"SmartShop" <kiemtienonline2357@gmail.com>',
                 to: email,
-                subject: `[BOOKSTORE] Hãy đặt lại mật khẩu tài khoản của bạn`,
+                subject: `[SmartShop] Hãy đặt lại mật khẩu tài khoản của bạn`,
                 html: ` <h2>Xin chào bạn ${user.fullName},</h2>
-                        <p>Chúng tôi biết rằng bạn đã mất mật khẩu BookStore của mình.</p>
+                        <p>Chúng tôi biết rằng bạn đã mất mật khẩu SmartShop của mình.</p>
                         <p>
                             Nhưng đừng lo lắng, bạn có thể truy cập link sau để đặt lại mật khẩu của mình:
                         </p>
                         <a href="${link}"><h3>Đặt lại mật khẩu</h3></a>
                         <p>Trân trọng,</p>
-                        <p><b>BOOKSTORE</b></p>`
+                        <p><b>SmartShop</b></p>`
             })
             return res.status(200).json({
                 error: 0,
