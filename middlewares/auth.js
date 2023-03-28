@@ -3,10 +3,8 @@ const jwt = require('jsonwebtoken');
 const verifyToken = (req, res, next) => {
     const authorizationHeader = req.headers['authorization']
     if (!authorizationHeader) return res.status(401).json({message: '401 Unauthorized'})
-
     const token = authorizationHeader.split(' ')[1]
     if (!token) return res.status(401).json({message: '401 Unauthorized'})
-
     jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, async (err, data) => {
         if (err) return res.status(403).json({message: '403 Forbidden'})
         const { userId, role } = data
@@ -24,7 +22,6 @@ const checkRole = (permissions) => {
             const { role: roleQuery } = query
             if (roleQuery && role <= +roleQuery) return res.status(403).json({message: '403 Forbidden'})
         }
-
         if (!permissions.includes(role) && id !== userId) return res.status(403).json({message: '403 Forbidden'})
         next()
     }

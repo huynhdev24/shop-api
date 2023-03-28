@@ -1,4 +1,4 @@
-const publisherService = require('../services/publishers.service')
+const publisherService = require('../services/publishers.service');
 
 const publisherController = {
     getAll: async(req, res) => {
@@ -107,4 +107,4 @@ const publisherController = {
     }
 }
 
-module.exports = publisherController
+module.exports = publisherController;

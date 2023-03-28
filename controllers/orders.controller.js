@@ -1,9 +1,9 @@
-const crypto = require('crypto') 
-const axios = require('axios')
-const orderService = require('../services/orders.service')
-const voucherService = require('../services/vouchers.service')
-const { paymentStatusEnum, methodEnum, orderStatusEnum } = require('../utils/enum')
-const { orderSuccess } = require('../utils/sendMail')
+const crypto = require('crypto'); 
+const axios = require('axios');
+const orderService = require('../services/orders.service');
+const voucherService = require('../services/vouchers.service');
+const { paymentStatusEnum, methodEnum, orderStatusEnum } = require('../utils/enum');
+const { orderSuccess } = require('../utils/sendMail');
 
 const orderController = {
     getAll: async(req, res) => {
@@ -272,4 +272,4 @@ const orderController = {
     },
 }
 
-module.exports = orderController
+module.exports = orderController;

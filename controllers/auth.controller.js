@@ -1,13 +1,11 @@
-const { google } = require('googleapis')
-const OAuth2 = google.auth.OAuth2
-
-const OAuth2Client = new OAuth2()
+const { google } = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
+const OAuth2Client = new OAuth2();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
-const { generateAccessToken, generateRefreshToken, generateVerifyCode } = require('../utils/auth')
-const { transporter } = require('../config/nodemailer')
-const userService = require('../services/user.service')
+const { generateAccessToken, generateRefreshToken, generateVerifyCode } = require('../utils/auth');
+const { transporter } = require('../config/nodemailer');
+const userService = require('../services/user.service');
 
 const authController = {
     loginWithGoogle: async(req, res) => {
@@ -369,4 +367,4 @@ const authController = {
     },
 }
 
-module.exports = authController
+module.exports = authController;

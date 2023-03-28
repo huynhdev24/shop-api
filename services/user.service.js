@@ -1,9 +1,8 @@
-const User = require('../models/users.model')
+const User = require('../models/users.model');
 
 const userService = {
     getAll: async({query, page, limit, sort}) => {
         const skip = (page - 1) * limit
-
         return Promise.all([
             User.countDocuments(query), 
             User.find(query).skip(skip).limit(limit).sort(sort)])
@@ -105,4 +104,4 @@ const userService = {
     }
 }
 
-module.exports = userService
+module.exports = userService;

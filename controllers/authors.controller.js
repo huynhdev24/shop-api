@@ -1,4 +1,4 @@
-const authorService = require('../services/authors.service')
+const authorService = require('../services/authors.service');
 
 const authorController = {
     getAll: async(req, res) => {
@@ -123,4 +123,4 @@ const authorController = {
     }
 }
 
-module.exports = authorController
+module.exports = authorController;

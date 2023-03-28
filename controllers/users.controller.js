@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
-const userService = require('../services/user.service')
-const { transporter } = require('../config/nodemailer')
-const { cloudinary } = require('../config/cloudinary')
-
-const { RoleEnum } = require('../utils/enum')
+const userService = require('../services/user.service');
+const { transporter } = require('../config/nodemailer');
+const { cloudinary } = require('../config/cloudinary');
+const { RoleEnum } = require('../utils/enum');
 
 const usersController = {
     getAll: async(req, res) => {
@@ -325,4 +324,4 @@ const usersController = {
     }
 }
 
-module.exports = usersController
+module.exports = usersController;
