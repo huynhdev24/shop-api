@@ -2,8 +2,11 @@ const History = require('../models/history.model');
 // const User = require('../models/user.model');
 
 const historyService = {
-    getAll: async({page, limit}) => {
-        return await History.find({})
+    getAll: async({query, page, limit, sort}) => {
+        const skip = (page - 1) * limit
+        return await Promise.all([
+            History.countDocuments(query), 
+            History.find(query).skip(skip).limit(limit).sort(sort)])
     },
     getById: async(id) => {
         return await History.findById(id)

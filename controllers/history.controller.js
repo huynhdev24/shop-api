@@ -3,11 +3,27 @@ const historyService = require('../services/history.service');
 const historyController = {
     getAll: async(req, res) => {
         try {
-            const data = await historyService.getAll({})
+            const page = req.query.page ? parseInt(req.query.page) : 1
+            const limit = req.query.limit ? parseInt(req.query.limit) : 2
+            const sort = req.query.sort ? req.query.sort : { createdAt: -1 }
+            const userId = req.query.userId
+
+            let query = {}
+            if (userId) query.user = { $in : userId}
+
+            const [count, data] = await historyService.getAll({query, page, limit, sort})
+            const totalPage = Math.ceil(count / limit)
+
             res.status(200).json({
                 message: 'success',
                 error: 0,
-                data
+                data,
+                count,
+                pagination: {
+                    page,
+                    limit,
+                    totalPage,
+                }
             })
         } catch (error) {
             res.status(500).json({
