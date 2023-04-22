@@ -1,4 +1,4 @@
-const genreService = require('../services/genres.service')
+const genreService = require('../services/genres.service');
 
 const genreController = {
     getAll: async(req, res) => {
@@ -132,4 +132,4 @@ const genreController = {
     }
 }
 
-module.exports = genreController
+module.exports = genreController;

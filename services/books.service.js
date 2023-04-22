@@ -1,11 +1,10 @@
-const Book = require('../models/books.model')
-const Order = require('../models/orders.model')
+const Book = require('../models/books.model');
+const Order = require('../models/orders.model');
 const mongoose = require("mongoose");
 
 const bookService = {
     getAll: async({query, page, limit, sort}) => {
         const skip = (page - 1) * limit
-            
         return await Promise.all([
             Book.countDocuments(query), 
             Book.find(query).populate('genre author publisher').skip(skip).limit(limit).sort(sort)])
@@ -15,7 +14,6 @@ const bookService = {
     },
     getById: async(id) => {
         return await Book.findById(id).populate('author publisher genre')
-       
     },
     getBySlug: async(slug) => {
         return await Book.findOne({slug}).populate('author publisher genre')
@@ -84,4 +82,4 @@ const bookService = {
     }
 }
 
-module.exports = bookService
+module.exports = bookService;

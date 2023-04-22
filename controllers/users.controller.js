@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
-const userService = require('../services/user.service')
-const { transporter } = require('../config/nodemailer')
-const { cloudinary } = require('../config/cloudinary')
-
-const { RoleEnum } = require('../utils/enum')
+const userService = require('../services/user.service');
+const { transporter } = require('../config/nodemailer');
+const { cloudinary } = require('../config/cloudinary');
+const { RoleEnum } = require('../utils/enum');
 
 const usersController = {
     getAll: async(req, res) => {
@@ -123,11 +122,11 @@ const usersController = {
             await userService.createStaff({email, fullName, phoneNumber, password: hash, role: RoleEnum.Staff, status: 1})
 
             const resultSendMail = await transporter.sendMail({
-                from: '"BOOKSTORE" <kiemtienonline2357@gmail.com>',
+                from: '"SmartShop" <kiemtienonline2357@gmail.com>',
                 to: email,
-                subject: `[BOOKSTORE] Thông tin tài khoản nhân viên của bạn`,
+                subject: `[SmartShop] Thông tin tài khoản nhân viên của bạn`,
                 html: ` <h3>Xin chào ${fullName},</h3>
-                        <h3>Chúc mừng bạn vừa được cấp tài khoản quyền nhân viên tại Bookstore!</h3>
+                        <h3>Chúc mừng bạn vừa được cấp tài khoản quyền nhân viên tại SmartShop!</h3>
                         <p>Username : ${email}</p>
                         <p>Password : ${password}</p>`
             })
@@ -325,4 +324,4 @@ const usersController = {
     }
 }
 
-module.exports = usersController
+module.exports = usersController;

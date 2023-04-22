@@ -1,13 +1,11 @@
-const Order = require('../models/orders.model')
+const Order = require('../models/orders.model');
 
 const orderService = {
     getAll: async({query, page, limit, sort}) => {
         const skip = (page - 1) * limit
-
         return await Promise.all([
             Order.countDocuments(query), 
             Order.find(query).skip(skip).limit(limit).sort(sort)])
-
     },
     getById: async(id) => {
         return await Order.findById(id).populate("user voucher").populate("products.product").populate("tracking.user", "fullName")
@@ -32,7 +30,6 @@ const orderService = {
             orderStatus,
             paymentStatus
         }, {new: true})
-       
     },
     updatePaymentId: async(orderId, { paymentId }) => {
         return await Order.findByIdAndUpdate(orderId,  { paymentId }, {new: true})
@@ -136,9 +133,8 @@ const orderService = {
             },
             { $sort: { count: -1 } },
             { $limit: 5 },
-            
         ])
     },
 }
 
-module.exports = orderService
+module.exports = orderService;

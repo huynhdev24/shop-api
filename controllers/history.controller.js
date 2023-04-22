@@ -1,23 +1,24 @@
-const authorService = require('../services/authors.service');
+const historyService = require('../services/history.service');
 
-const authorController = {
+const historyController = {
     getAll: async(req, res) => {
         try {
             const page = req.query.page ? parseInt(req.query.page) : 1
-            const limit = req.query.limit ? parseInt(req.query.limit) : 0
-            const sortByDate = req.query.sortByDate
+            const limit = req.query.limit ? parseInt(req.query.limit) : 2
+            const sort = req.query.sort ? req.query.sort : { createdAt: -1 }
+            const userId = req.query.userId
 
-            let sort = {}
-            if (sortByDate) sort.createdAt = sortByDate === "asc" ? 1 : -1
+            let query = {}
+            if (userId) query.user = { $in : userId}
 
-            const [count, data ] = await authorService.getAll({page, limit, sort})
+            const [count, data] = await historyService.getAll({query, page, limit, sort})
             const totalPage = Math.ceil(count / limit)
 
             res.status(200).json({
                 message: 'success',
                 error: 0,
-                count,
                 data,
+                count,
                 pagination: {
                     page,
                     limit,
@@ -34,8 +35,7 @@ const authorController = {
     getById: async(req, res) => {
         try {
             const { id } = req.params
-            const [data, books] = await authorService.getById(id)
-
+            const data = await historyService.getById(id)
             if (data) {
                 res.status(200).json({
                     message: 'success',
@@ -44,9 +44,9 @@ const authorController = {
                 })
             } else {
                 res.status(404).json({
-                    message: 'Không tìm thấy tác giả!',
+                    message: 'Không tìm thấy Lịch sử!',
                     error: 1,
-                    data: null
+                    data
                 })
             }
         } catch (error) {
@@ -58,7 +58,7 @@ const authorController = {
     },
     create: async(req, res) => {
         try {
-            const data = await authorService.create(req.body)
+            const data = await historyService.create(req.body)
             res.status(201).json({
                 message: 'success',
                 error: 0,
@@ -74,7 +74,7 @@ const authorController = {
     updateById: async(req, res) => {
         try {
             const { id } = req.params
-            const data = await authorService.updateById(id, req.body)
+            const data = await historyService.updateById(id, req.body)
             if (data) {
                 return res.status(200).json({
                     message: 'success',
@@ -83,7 +83,7 @@ const authorController = {
                 })
             } else {
                 return res.status(404).json({
-                    message: `Không tìm thấy tác giả có id:${id}`,
+                    message: `Không tìm thấy Lịch sử có id:${id}`,
                     error: 1,
                     data
                 })
@@ -99,7 +99,7 @@ const authorController = {
     deleteById: async(req, res) => {
         try {
             const { id } = req.params
-            const data = await authorService.deleteById(id)
+            const data = await historyService.deleteById(id)
             if (data) {
                 return res.status(200).json({
                     message: 'success',
@@ -108,7 +108,7 @@ const authorController = {
                 })
             } else {
                 return res.status(404).json({
-                    message: `Không tìm thấy tác giả có id:${id}`,
+                    message: `Không tìm thấy Lịch sử có id:${id}`,
                     error: 1,
                     data
                 })
@@ -123,4 +123,4 @@ const authorController = {
     }
 }
 
-module.exports = authorController;
+module.exports = historyController;

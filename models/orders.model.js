@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
-const { methodEnum, orderStatusEnum, paymentStatusEnum } = require('../utils/enum')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const { methodEnum, orderStatusEnum, paymentStatusEnum } = require('../utils/enum');
+const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
     user: {
@@ -50,4 +50,4 @@ const orderSchema = new Schema({
 })
 
 
-module.exports = mongoose.model('Order', orderSchema)
+module.exports = mongoose.model('Order', orderSchema);

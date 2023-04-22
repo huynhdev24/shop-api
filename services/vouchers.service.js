@@ -1,10 +1,9 @@
-const Voucher = require('../models/vouchers.model')
+const Voucher = require('../models/vouchers.model');
 
 const voucherService = {
     getAll: async({query, page, limit, sort}) => {
         const skip = (page - 1) * limit
         return Promise.all([Voucher.countDocuments(query), Voucher.find(query).skip(skip).limit(limit).sort(sort)])
-
     },
     getById: async(id) => {
         return await Voucher.findById(id)
@@ -31,4 +30,4 @@ const voucherService = {
     }
 }
 
-module.exports = voucherService
+module.exports = voucherService;

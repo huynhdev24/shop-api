@@ -1,5 +1,5 @@
-const Genre = require('../models/genres.model')
-const Book = require('../models/books.model')
+const Genre = require('../models/genres.model');
+const Book = require('../models/books.model');
 
 const genreService = {
     getAll: async({page, limit}) => {
@@ -19,7 +19,6 @@ const genreService = {
         return await Genre.findByIdAndUpdate(id, { name: name }, {new: true})
     },
     deleteById: async(id) => {
-
         await Book.updateMany({genre: id}, {
             $pull: { genre: id }
         })
@@ -27,4 +26,4 @@ const genreService = {
     }
 }
 
-module.exports = genreService
+module.exports = genreService;

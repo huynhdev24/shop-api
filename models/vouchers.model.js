@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const voucherSchema = new Schema({
     minimum: {
@@ -17,4 +17,4 @@ const voucherSchema = new Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Voucher', voucherSchema)
+module.exports = mongoose.model('Voucher', voucherSchema);

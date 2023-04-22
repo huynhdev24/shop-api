@@ -1,11 +1,9 @@
-const crypto = require('crypto') 
-const axios = require('axios')
-
-const orderService = require('../services/orders.service')
-const voucherService = require('../services/vouchers.service')
-
-const { paymentStatusEnum, methodEnum, orderStatusEnum } = require('../utils/enum')
-const { orderSuccess } = require('../utils/sendMail')
+const crypto = require('crypto'); 
+const axios = require('axios');
+const orderService = require('../services/orders.service');
+const voucherService = require('../services/vouchers.service');
+const { paymentStatusEnum, methodEnum, orderStatusEnum } = require('../utils/enum');
+const { orderSuccess } = require('../utils/sendMail');
 
 const orderController = {
     getAll: async(req, res) => {
@@ -70,18 +68,18 @@ const orderController = {
             const host = req.get('origin')
             const link = `${host}/thanhtoan/momo/callback`
 
-            const partnerCode = "MOMO";
-            const accessKey = "F8BBA842ECF85";
-            const secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
+            const partnerCode = "MOMO5PB020220322";
+            const accessKey = "imYC24phv0gYMFgA";
+            const secretkey = "gZ2H5gyDOrVLQ0mnVJjPCWQ4a2lenHLN";
             const requestId = paymentId;
             const orderId = requestId;
-            const orderInfo = "Thanh toán mua hàng tại BookStore";
+            const orderInfo = "Thanh toán mua hàng tại SmartShop";
             const redirectUrl = link;
             const ipnUrl = "https://callback.url/notify";
             const requestType = "captureWallet"
             const extraData = "";
 
-            const rawSignature = "accessKey="+accessKey+"&amount=" + amount+"&extraData=" + extraData+"&ipnUrl=" + ipnUrl+"&orderId=" + orderId+"&orderInfo=" + orderInfo+"&partnerCode=" + partnerCode +"&redirectUrl=" + redirectUrl+"&requestId=" + requestId+"&requestType=" + requestType
+            const rawSignature = "accessKey="+accessKey+"&amount=" + amount+"&extraData=" + extraData+"&ipnUrl=" + ipnUrl+"&orderId=" + orderId+"&orderInfo=" + orderInfo+"&partnerCode=" + partnerCode +"&redirectUrl=" + redirectUrl+"&requestId=" + requestId+"&requestType=" + requestType;
            
             const signature = crypto.createHmac('sha256', secretkey).update(rawSignature).digest('hex');
             const requestBody = JSON.stringify({
@@ -120,15 +118,15 @@ const orderController = {
         try {
             const { paymentId } = req.body
 
-            const partnerCode = "MOMO";
-            const accessKey = "F8BBA842ECF85";
-            const secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
+            const partnerCode = "MOMO5PB020220322";
+            const accessKey = "imYC24phv0gYMFgA";
+            const secretkey = "gZ2H5gyDOrVLQ0mnVJjPCWQ4a2lenHLN";
 
             const rawSignature = "accessKey=" + accessKey + "&orderId=" + paymentId + "&partnerCode=" + partnerCode + "&requestId=" + paymentId
             const signature = crypto.createHmac('sha256', secretkey).update(rawSignature).digest('hex');
            
             const requestBody = JSON.stringify({
-                partnerCode : "MOMO",
+                partnerCode : "MOMO5PB020220322",
                 requestId : paymentId,
                 orderId : paymentId,
                 signature : signature,
@@ -190,9 +188,10 @@ const orderController = {
                 userId, products, delivery, voucherId, cost, method, paymentId
             })
 
-            if (data) {
-                await orderSuccess({ clientURL: req.get('origin'), delivery, products, method, cost })
-            }
+            //hotbug
+            // if (data) {
+            //     await orderSuccess({ clientURL: req.get('origin'), delivery, products, method, cost })
+            // }
 
             return res.status(201).json({
                 message: 'success',
@@ -273,4 +272,4 @@ const orderController = {
     },
 }
 
-module.exports = orderController
+module.exports = orderController;

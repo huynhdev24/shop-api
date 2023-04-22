@@ -1,4 +1,4 @@
-const voucherService = require('../services/vouchers.service')
+const voucherService = require('../services/vouchers.service');
 
 const voucherController = {
     getAll: async(req, res) => {
@@ -156,4 +156,4 @@ const voucherController = {
     }
 }
 
-module.exports = voucherController
+module.exports = voucherController;

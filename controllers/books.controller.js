@@ -1,5 +1,5 @@
-const bookService = require('../services/books.service')
-const { cloudinary } = require('../config/cloudinary')
+const bookService = require('../services/books.service');
+const { cloudinary } = require('../config/cloudinary');
 
 const bookController = {
     getAll: async(req, res) => {
@@ -238,4 +238,4 @@ const bookController = {
     }
 }
 
-module.exports = bookController
+module.exports = bookController;

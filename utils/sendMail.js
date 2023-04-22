@@ -101,9 +101,9 @@ const orderSuccess = async ({ clientURL, delivery, products, cost, method }) => 
                     </div>
                 </div>` 
     return await transporter.sendMail({
-        from: '"BookStore" <kiemtienonline2357@gmail.com>',
+        from: '"SmartShop" <kiemtienonline2357@gmail.com>',
         to: delivery?.email,
-        subject: `[BookStore] Đã nhận được đơn hàng của bạn`,
+        subject: `[SmartShop] Đã nhận được đơn hàng của bạn`,
         html: `${html}`
     })
 }

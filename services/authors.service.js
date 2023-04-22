@@ -1,11 +1,10 @@
-const Author = require('../models/authors.model')
-const Book = require('../models/books.model')
+const Author = require('../models/authors.model');
+const Book = require('../models/books.model');
 
 const authorService = {
     getAll: async({page, limit, sort}) => {
         const skip = (page - 1) * limit
         return await Promise.all([Author.countDocuments({}), Author.find({}).skip(skip).limit(limit).sort(sort)])
-
     },
     getById: async(id) => {
         return await Promise.all([Author.findById(id), Book.find({author: {$in: id}})])
@@ -26,4 +25,4 @@ const authorService = {
     }
 }
 
-module.exports = authorService
+module.exports = authorService;

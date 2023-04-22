@@ -1,5 +1,5 @@
-const Publisher = require('../models/publishers.model')
-const Book = require('../models/books.model')
+const Publisher = require('../models/publishers.model');
+const Book = require('../models/books.model');
 
 const publisherService = {
     getAll: async({page, limit}) => {
@@ -22,4 +22,4 @@ const publisherService = {
     }
 }
 
-module.exports = publisherService
+module.exports = publisherService;
