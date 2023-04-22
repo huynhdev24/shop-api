@@ -1,19 +1,19 @@
 const historyService = require('../services/history.service');
 
 const historyController = {
+    // lấy danh sách lịch sử có phân trang
     getAll: async(req, res) => {
         try {
             const page = req.query.page ? parseInt(req.query.page) : 1
-            const limit = req.query.limit ? parseInt(req.query.limit) : 2
+            const limit = req.query.limit ? parseInt(req.query.limit) : 0
             const sort = req.query.sort ? req.query.sort : { createdAt: -1 }
-            const userId = req.query.userId
+            const { query } = req.query
 
-            let query = {}
-            if (userId) query.user = { $in : userId}
-
-            const [count, data] = await historyService.getAll({query, page, limit, sort})
+            const queryObj = !!query ? query : {}
+            
+            const [count, data] = await historyService.getAll({query: queryObj, page, limit, sort})
             const totalPage = Math.ceil(count / limit)
-
+            
             res.status(200).json({
                 message: 'success',
                 error: 0,
@@ -32,6 +32,7 @@ const historyController = {
             })
         }
     },
+    // lấy 1 record lịch sử thao tác theo ID
     getById: async(req, res) => {
         try {
             const { id } = req.params
@@ -56,6 +57,7 @@ const historyController = {
             })
         }
     },
+    // tạo lịch sử cho thao tác
     create: async(req, res) => {
         try {
             const data = await historyService.create(req.body)
@@ -71,6 +73,7 @@ const historyController = {
             })
         }
     },
+    // cập nhật lịch sử theo ID
     updateById: async(req, res) => {
         try {
             const { id } = req.params
@@ -96,6 +99,7 @@ const historyController = {
             })
         }
     },
+    // xóa lịch sử theo ID
     deleteById: async(req, res) => {
         try {
             const { id } = req.params
