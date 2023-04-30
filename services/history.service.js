@@ -6,8 +6,8 @@ const historyService = {
         const skip = (page - 1) * limit
         return await Promise.all([
             History.countDocuments(query), 
-            // History.find(query).populate('user').skip(skip).limit(limit).sort(sort)])
-            History.find()])
+            History.find(query).skip(skip).limit(limit).sort(sort)])
+            // History.find()])
     },
     getById: async(id) => {
         return await History.findById(id)
