@@ -12,11 +12,11 @@ const historyService = {
     getById: async(id) => {
         return await History.findById(id)
     },
-    create: async({title}) => {
-        const newHistory = new History({title})
+    create: async({action, type, title, link, user}) => {
+        const newHistory = new History({action, type, title, link, user})
         return await newHistory.save()
     },
-    updateById: async(id, {title}) => {
+    updateById: async(id, {action, type, title, link}) => {
         return await History.findByIdAndUpdate(id, { title: title }, {new: true})
     },
     deleteById: async(id) => {
