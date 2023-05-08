@@ -3,6 +3,7 @@ const cors = require('cors')
 require('dotenv').config()
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const path = require('path');
 const app = express()
 
 const whitelist = ['http://localhost:3000', process.env.REACT_APP_URL, process.env.REACT_APP_URL_1]
@@ -26,7 +27,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
+app.use(express.static(path.resolve(__dirname,'public')));
 
 const routes = require('./routes')
 
