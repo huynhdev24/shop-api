@@ -8,7 +8,7 @@ const historyController = {
             const limit = req.query.limit ? parseInt(req.query.limit) : 2
             const sort = req.query.sort ? req.query.sort : { createdAt: -1 }
             const userId = req.query.userId
-
+            
             let query = {}
             if (userId) query.user = { $in : userId}
 
@@ -125,7 +125,38 @@ const historyController = {
                 error: 1,
             })
         }
-    }
+    },
+    // tìm kiếm lịch sử
+    getSearch: async(req, res) => {
+        try {
+            const page = req.query.page ? parseInt(req.query.page) : 1
+            const limit = req.query.limit ? parseInt(req.query.limit) : 0
+            const sort = req.query.sort ? req.query.sort : { createdAt: -1 }
+            const { query } = req.query
+
+            const queryObj = !!query ? query : {}
+            
+            const [count, data] = await historyService.getSearch({query: queryObj, page, limit, sort})
+            const totalPage = Math.ceil(count / limit)
+            
+            res.status(200).json({
+                message: 'success',
+                error: 0,
+                data,
+                count,
+                pagination: {
+                    page,
+                    limit,
+                    totalPage,
+                }
+            })
+        } catch (error) {
+            res.status(500).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
+    },
 }
 
 module.exports = historyController;

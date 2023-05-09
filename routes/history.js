@@ -7,5 +7,6 @@ router.get('/:id', historyController.getById);
 router.post('/', historyController.create);
 router.put('/:id', historyController.updateById);
 router.delete('/:id', historyController.deleteById);
+router.get('/searchstring', historyController.getSearch);
 
 module.exports = router;

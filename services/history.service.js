@@ -23,7 +23,13 @@ const historyService = {
         // Khi xóa 1 NXB=> Cần update lại các sách có NXB cần xóa = null
         // await History.updateMany({history: id }, { history: null})
         return await History.findByIdAndDelete(id)
-    }
+    },
+    getSearch: async({query, page, limit, sort}) => {
+        const skip = (page - 1) * limit
+        return await Promise.all([
+            History.countDocuments(query), 
+            History.find(query).skip(skip).limit(limit).sort(sort)])
+    },
 }
 
 module.exports = historyService;
