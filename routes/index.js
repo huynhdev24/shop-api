@@ -11,6 +11,8 @@ const voucherRouter = require('./voucher');
 const analyticRouter = require('./analytics');
 const historyRouter = require('./history');
 const importAuthorRouter = require('./cvstojson.js');
+const ratingRouter = require('./ratings');
+
 function routes(app) {
     
     app.use('/api/v1/genres', genreRouter);
@@ -25,6 +27,9 @@ function routes(app) {
     app.use('/api/v1/analytics', analyticRouter);
     app.use('/api/v1/history', historyRouter);
     app.use('/api/v1/importAuthor', importAuthorRouter);
+    app.use('/api/v1/rating', ratingRouter);
+
+
     app.use('*', function(req, res) {
         res.status(404).json({
             error: 404,
