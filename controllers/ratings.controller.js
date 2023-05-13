@@ -71,6 +71,24 @@ const ratingController = {
             })
         }
     },
+    getAverage: async(req, res) => {
+        try {
+            const data = await ratingService.getAverage({
+                user: req.body.user, 
+                product: req.body.product,
+            });
+            res.status(201).json({
+                message: 'success',
+                error: 0,
+                data
+            });
+        } catch (error) {
+            res.status(400).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
+    }
 }
 
 module.exports = ratingController;

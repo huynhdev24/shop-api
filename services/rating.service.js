@@ -19,6 +19,16 @@ const ratingService = {
         })
         return await newRating.save()
     },
+    getAverage: async({user, product}) => {
+        const countRatings = await Rating.countDocuments();
+        const listRatings = await Rating.where(x => x.user === user && x.product === product);
+        let totalStar = 0;
+        for(let i = 0; i < listRatings.length; i++) {
+            totalStar = totalStar + listRatings.rating; 
+        }
+        if(countRatings) return Math.round(totalStar / countRatings) / 10;
+        return 3;
+    },
 }
 
 module.exports = ratingService;
