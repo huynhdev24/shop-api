@@ -13,12 +13,13 @@ var storage = multer.diskStorage({
 
 var upload = multer({storage: storage});
 
-const importCSV = require('../controllers/importAuthorCVS');
+const importCSV = require('../controllers/importCVS');
 
 
 // router.post('/', upload.single('file'), function(req, res) {
 //     importAuthorCVS.importAuthorCVS;
 // });
-router.post('/', upload.single('file'), importCSV.importAuthorCVS);
+router.post('/import-author', upload.single('file'), importCSV.importAuthorCVS);
+router.post('/import-genre', upload.single('file'), importCSV.importGenreCVS);
 
 module.exports = router;
