@@ -53,6 +53,32 @@ const importCSV = {
         } catch(error) {
             res.send({status: 400, success: false, msg: error.message});
         }
+    },
+    importRatingCVS: async(req, res) => {
+        try {
+    
+            var ratingData = [];
+            console.log(req.file.path);
+            cvs()
+            .fromFile(req.file.path)
+            .then(async (response) => {
+                console.log(response);
+                for(var x = 0; x < response.length; x++) {
+                    ratingData.push({
+                        user: response[x].User,
+                        product: response[x].Product,
+                        rating: response[x].Rating
+                    });
+                }
+                console.log(ratingData)
+                await Rating.insertMany(ratingData);
+    
+            })
+            .catch((error) => console.log(error));
+            res.send({status: 200, success: true, msg: 'thành công'});
+        } catch(error) {
+            res.send({status: 400, success: false, msg: error.message});
+        }
     }
 } 
 

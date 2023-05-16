@@ -21,5 +21,6 @@ const importCSV = require('../controllers/importCVS');
 // });
 router.post('/import-author', upload.single('file'), importCSV.importAuthorCVS);
 router.post('/import-genre', upload.single('file'), importCSV.importGenreCVS);
+router.post('/import-rating', upload.single('file'), importCSV.importRatingCVS);
 
 module.exports = router;
