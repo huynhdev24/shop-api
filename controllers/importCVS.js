@@ -3,6 +3,7 @@ var Author = require('../models/authors.model');
 var Genre = require('../models/genres.model');
 var Rating = require('../models/ratings.model');
 var Book = require('../models/books.model');
+var User = require('../models/user.model');
 var cvs = require('csvtojson');
 
 const importCSV = {
@@ -119,7 +120,43 @@ const importCSV = {
         } catch(error) {
             res.send({status: 400, success: false, msg: error.message});
         }
-    }
+    },
+    importUserCVS: async(req, res) => {
+        try {
+    
+            var userData = [];
+            console.log(req.file.path);
+            cvs()
+            .fromFile(req.file.path)
+            .then(async (response) => {
+                console.log(response);
+                for(var x = 0; x < response.length; x++) {
+                    userData.push({
+                        email: response[x].email,
+                        service: response[x].service,
+                        serviceId: response[x].serviceId,
+                        password: response[x].password,
+                        fullName: response[x].fullName,
+                        gender: response[x].gender,
+                        birthday: response[x].birthday,
+                        phoneNumber: response[x].phoneNumber,
+                        avatar: response[x].avatar,
+                        address: response[x].address,
+                        cart: response[x].cart,
+                        role: response[x].role,
+                        status: response[x].status
+                    });
+                }
+                console.log(userData)
+                await User.insertMany(userData);
+    
+            })
+            .catch((error) => console.log(error));
+            res.send({status: 200, success: true, msg: 'thành công'});
+        } catch(error) {
+            res.send({status: 400, success: false, msg: error.message});
+        }
+    },
 } 
 
 module.exports = importCSV;
