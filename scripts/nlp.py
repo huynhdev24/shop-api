@@ -4,7 +4,7 @@ import json
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
-data = pd.read_csv('data/goodbook-10k/books.csv')
+data = pd.read_csv('C:/shop/shop-api/data/goodbook-10k/books.csv')
 data.head()
 
 data.columns
