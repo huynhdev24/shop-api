@@ -3,7 +3,7 @@ var Author = require('../models/authors.model');
 var Genre = require('../models/genres.model');
 var Rating = require('../models/ratings.model');
 var Book = require('../models/books.model');
-var User = require('../models/user.model');
+var User = require('../models/users.model');
 var cvs = require('csvtojson');
 
 const importCSV = {
