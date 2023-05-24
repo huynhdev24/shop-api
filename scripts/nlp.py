@@ -4,7 +4,7 @@ import json
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
-data = pd.read_csv('C:/shop/shop-api/data/goodbook-10k/books.csv')
+data = pd.read_csv('data/bookstore/books.csv')
 data.head()
 
 data.columns
@@ -12,7 +12,7 @@ data.columns
 data.isnull().sum()
 
 #Trích xuất các cột có liên quan sẽ ảnh hưởng đến xếp hạng của sách dựa trên tên sách.
-books_title = data[['book_id', 'title']]
+books_title = data[['bookId', 'name']]
 books_title.head()
 
 #Hãy vector hóa tất cả các tiêu đề này
@@ -23,8 +23,8 @@ vect = CountVectorizer(analyzer = 'word', ngram_range = (1,2), stop_words = 'eng
 #ngram_range = (1,2) - if used more than  1(value), lots of features or noise
 
 #Fit into the title
-vect.fit(books_title['title'])
-title_matrix = vect.transform(books_title['title'])
+vect.fit(books_title['name'])
+title_matrix = vect.transform(books_title['name'])
 title_matrix.shape
 
 #Lets find vocabulary/features
@@ -36,8 +36,8 @@ cosine_sim_titles = cosine_similarity(title_matrix, title_matrix)
 cosine_sim_titles.shape
 
 #Nhận sách tương tự với một tiêu đề nhất định
-title_id = 100
-books_title['title'].iloc[title_id]
+title_id = 10
+books_title['name'].iloc[title_id]
 
 #Tìm hiểu xem các tính năng nào đã được vectorizer xem xét cho một tiêu đề nhất định?
 feature_array = np.squeeze(title_matrix[title_id].toarray()) #squeeze activity matrix into array
@@ -57,7 +57,7 @@ top_n_sim_values
 #find top n with values > 0
 top_n_idx = top_n_idx[top_n_sim_values > 0]
 #Matching books
-books_title['title'].iloc[top_n_idx]
+books_title['name'].iloc[top_n_idx]
 
 # lets wrap the above code in a function
 def return_sim_books(title_id, title_matrix, vectorizer, top_n = 10):
@@ -75,7 +75,7 @@ def return_sim_books(title_id, title_matrix, vectorizer, top_n = 10):
     
     
     # find features from the vectorized matrix
-    sim_books_idx = books_title['title'].iloc[top_n_idx].index
+    sim_books_idx = books_title['name'].iloc[top_n_idx].index
     words = []
     for book_idx in sim_books_idx:
         try:
@@ -86,35 +86,36 @@ def return_sim_books(title_id, title_matrix, vectorizer, top_n = 10):
         words.append([" , ".join([features[i] for i in idx[0]])])
         
     # collate results
-    res = pd.DataFrame({"book_title" : books_title['title'].iloc[title_id],
-           "sim_books": books_title['title'].iloc[top_n_idx].values,"words":words,
+    res = pd.DataFrame({"book_title" : books_title['name'].iloc[title_id],
+           "sim_books": books_title['name'].iloc[top_n_idx].values,"words":words,
            "scores":scores}, columns = ["book_title","sim_books","scores","words"])
     
     
     return res
 
 vect = CountVectorizer(analyzer='word',ngram_range=(1,2),stop_words='english', min_df = 0.001)
-vect.fit(books_title['title'])
-title_matrix = vect.transform(books_title['title'])
-books_title['title'][10]
+vect.fit(books_title['name'])
+title_matrix = vect.transform(books_title['name'])
+books_title['name'][10]
 return_sim_books(10,title_matrix,vect,top_n=10)
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
 tf = TfidfVectorizer(analyzer = 'word', ngram_range = (1,2), min_df = 0, stop_words = 'english')
-tfidf_matrix = tf.fit_transform(books_title['title'])
+tfidf_matrix = tf.fit_transform(books_title['name'])
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 cosine_sim
 
-titles = books_title['title']
-indices = pd.Series(books_title.index, index = books_title['title']) #converting all titles into a Series
+titles = books_title['name']
+indices = pd.Series(books_title.index, index = books_title['name']) #converting all titles into a Series
 
 #Function that gets book recommendations based on the cosine similarity score of book titles
 def book_recommendations(title, n):
     idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key = lambda x:x[1], reverse = True)
+    # sim_scores = sorted(sim_scores, key = lambda x:x[1], reverse = True)
+    sim_scores = sorted(sim_scores)
     sim_scores = sim_scores[1:n+1]
     book_indices = [i[0] for i in sim_scores]
     return titles.iloc[book_indices]
@@ -123,10 +124,10 @@ def book_recommendations(title, n):
 book_index = 10
 n = 20
 
-books_title['title'][book_index]
-book_recommendations(books_title.title[book_index],n)
+books_title['name'][book_index]
+book_recommendations(books_title.name[book_index],n)
 
-print((book_recommendations('A Tale of Two Cities',10)).to_json(orient="split"))
+print((book_recommendations('Lịch Sử 7 (2021)',10)).to_json(orient="split"))
 
 # import sys 
 
