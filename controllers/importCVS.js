@@ -5,6 +5,10 @@ var Rating = require('../models/ratings.model');
 var Book = require('../models/books.model');
 var User = require('../models/users.model');
 var cvs = require('csvtojson');
+const CsvParser = require('json2csv').Parser;
+var Iconv = require("iconv").Iconv;
+var iconv = new Iconv('utf8', 'utf16le');
+var fs = require('fs');
 
 const importCSV = {
     importAuthorCVS: async(req, res) => {
@@ -153,6 +157,38 @@ const importCSV = {
             })
             .catch((error) => console.log(error));
             res.send({status: 200, success: true, msg: 'thành công'});
+        } catch(error) {
+            res.send({status: 400, success: false, msg: error.message});
+        }
+    },
+    exportBookCSV: async(req, res) => {
+        try {
+            let books = [];
+            var bookData = await Book.find();
+
+            bookData.forEach((book) => {
+                const { bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId } = book;
+                books.push({ bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId });
+            })
+
+            const csvFields = ['bookId', 'name', 'year', 'price', 'page', 'genre', 'author', 'publisher', 'slug', 'size', 'description', 'discount', 'imageUrl', 'publicId'];
+            const csvParser = new CsvParser({ csvFields });
+            const csvData = csvParser.parse(books);
+
+            // res.setHeader("Content-Type", "text/csv;charset=utf-8");
+            // res.setHeader("Content-Disposition", "attachment; filename=books.csv");
+            // res.setHeader("Content-Location: /data/bookstore");
+            // res.status(200).end("\uFEFF" + csvData);
+
+            fs.writeFile('data/bookstore/books.csv', "\uFEFF" + csvData, 'utf8', function(err) {
+                if (err) {
+                    res.send({status: 400, success: false, msg: error.message});
+                } else{
+                    res.status(200).end('It\'s saved!');
+                }
+            });
+            // res.status(200).end("\uFEFF" + csvData);
+
         } catch(error) {
             res.send({status: 400, success: false, msg: error.message});
         }

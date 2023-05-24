@@ -26,6 +26,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "googleapis": "^111.0.0",
+    "iconv": "^3.0.1",
+    "json2csv": "^6.0.0-alpha.2",
     "jsontocsv": "^0.3.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",

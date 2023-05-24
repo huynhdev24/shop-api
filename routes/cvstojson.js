@@ -24,5 +24,6 @@ router.post('/import-genre', upload.single('file'), importCSV.importGenreCVS);
 router.post('/import-rating', upload.single('file'), importCSV.importRatingCVS);
 router.post('/import-book', upload.single('file'), importCSV.importBookCVS);
 router.post('/import-user', upload.single('file'), importCSV.importUserCVS);
+router.get('/export-book', importCSV.exportBookCSV);
 
 module.exports = router;
