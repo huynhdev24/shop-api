@@ -35,6 +35,7 @@ const pythonsController = {
         // E.g : http://localhost:3000/name?firstname=van&lastname=nghia
         var process = spawn('python', [
             'C:/shop/shop-api/scripts/nlp.py'
+            // req.param.name
             // req.query.firstname,
             // req.query.lastname
         ]);
