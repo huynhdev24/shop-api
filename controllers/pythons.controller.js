@@ -35,8 +35,10 @@ const pythonsController = {
         // req.query.lastname
         // E.g : http://localhost:3000/name?firstname=van&lastname=nghia
         var process = spawn('python', [
-            'C:/shop/shop-api/scripts/nlp.py',
-            req.query.bookname 
+            'C:/shop/shop-api/scripts/nlp_cosine.py',
+            req.query.bookid
+            req.query.bookname,
+            req.query.bookdescription 
         ]);
         process.stdout.on('data', function(data) {
             console.log(data.toString());

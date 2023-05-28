@@ -6,9 +6,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import sys 
-
-data = pd.read_csv('data/bookstore/books.csv')
-books_title = data[['bookId', 'name']]
+# C:/shop/shop-api/data/bookstore/books.csv
+# data = pd.read_csv('data/bookstore/books.csv')
+# '_id', 'name', 'slug', 'description', 'imageUrl'
+data = pd.read_csv('C:/shop/shop-api/data/bookstore/books.csv')
+data.fillna(method="ffill")
+books_title = data[['_id', 'name']]
 
 tf = TfidfVectorizer(analyzer = 'word', ngram_range = (1,2), min_df = 0, stop_words = 'english')
 tfidf_matrix = tf.fit_transform(books_title['name'])
@@ -27,4 +30,5 @@ def book_recommendations(title, n):
     book_indices = [i[0] for i in sim_scores]
     return titles.iloc[book_indices]
 
-print((book_recommendations(sys.argv[1],20)).to_json(orient="split"))
+# print((book_recommendations(sys.argv[1],20)).to_json(orient="split"))
+print((book_recommendations("Harry Potter and the Philosopher's Stone",20)).to_json(orient="split"))
