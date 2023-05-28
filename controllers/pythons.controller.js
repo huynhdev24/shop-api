@@ -36,9 +36,7 @@ const pythonsController = {
         // E.g : http://localhost:3000/name?firstname=van&lastname=nghia
         var process = spawn('python', [
             'C:/shop/shop-api/scripts/nlp_cosine.py',
-            req.query.bookid
-            req.query.bookname,
-            req.query.bookdescription 
+            req.query.bookinfo
         ]);
         process.stdout.on('data', function(data) {
             console.log(data.toString());
