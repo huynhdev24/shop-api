@@ -167,11 +167,11 @@ const importCSV = {
             var bookData = await Book.find();
 
             bookData.forEach((book) => {
-                const { bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId } = book;
-                books.push({ bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId });
+                const { _id, bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId } = book;
+                books.push({ _id, bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId });
             })
 
-            const csvFields = ['bookId', 'name', 'year', 'price', 'page', 'genre', 'author', 'publisher', 'slug', 'size', 'description', 'discount', 'imageUrl', 'publicId'];
+            const csvFields = ['_id', 'bookId', 'name', 'year', 'price', 'page', 'genre', 'author', 'publisher', 'slug', 'size', 'description', 'discount', 'imageUrl', 'publicId'];
             const csvParser = new CsvParser({ csvFields });
             const csvData = csvParser.parse(books);
 

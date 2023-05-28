@@ -31,13 +31,12 @@ const pythonsController = {
     },
     testPythonShell: async(req, res) => {
         var spawn = require('child_process').spawn;
-        
+        // req.query.firstname,
+        // req.query.lastname
         // E.g : http://localhost:3000/name?firstname=van&lastname=nghia
         var process = spawn('python', [
-            'C:/shop/shop-api/scripts/nlp.py'
-            // req.param.name
-            // req.query.firstname,
-            // req.query.lastname
+            'C:/shop/shop-api/scripts/nlp.py',
+            req.query.bookname 
         ]);
         process.stdout.on('data', function(data) {
             console.log(data.toString());
