@@ -11,7 +11,7 @@ const historySchema = new Schema({
         type: String,
     },
     title: { 
-        type: Number 
+        type: String 
     },
     link: {
         type: String

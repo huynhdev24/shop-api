@@ -10,7 +10,9 @@ const orderRouter = require('./order');
 const voucherRouter = require('./voucher');
 const analyticRouter = require('./analytics');
 const historyRouter = require('./history');
-
+const importRouter = require('./cvstojson.js');
+const ratingRouter = require('./ratings');
+const pythonRouter = require('./pythons.js');
 function routes(app) {
     
     app.use('/api/v1/genres', genreRouter);
@@ -24,6 +26,9 @@ function routes(app) {
     app.use('/api/v1/vouchers', voucherRouter);
     app.use('/api/v1/analytics', analyticRouter);
     app.use('/api/v1/history', historyRouter);
+    app.use('/api/v1/import', importRouter);
+    app.use('/api/v1/rating', ratingRouter);
+    app.use('/api/v1/pythons', pythonRouter);
 
     app.use('*', function(req, res) {
         res.status(404).json({
