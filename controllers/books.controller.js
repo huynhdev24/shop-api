@@ -238,26 +238,28 @@ const bookController = {
     },
     getBestProducts: async(req, res) => {
         try {
-            const page = req.query.page ? parseInt(req.query.page) : 1
-            const limit = req.query.limit ? parseInt(req.query.limit) : 0
-            const sort = req.query.sort ? req.query.sort : { createdAt: -1 }
-            const { query } = req.query
+            // const page = req.query.page ? parseInt(req.query.page) : 1
+            // const limit = req.query.limit ? parseInt(req.query.limit) : 0
+            // const sort = req.query.sort ? req.query.sort : { updatedAt: -1 }
+            // const { query } = req.query
 
-            const queryObj = !!query ? query : {}
+            // const queryObj = !!query ? query : {}
             
-            const [count, data] = await bookService.getBestProducts({query: queryObj, page, limit, sort})
-            const totalPage = Math.ceil(count / limit)
+            // const [count, data] = await bookService.getBestProducts({query: queryObj, page, limit, sort})
+            // const totalPage = Math.ceil(count / limit)
+
+            const data = await bookService.getSales();
             
             res.status(200).json({
                 message: 'success',
                 error: 0,
                 data,
-                count,
-                pagination: {
-                    page,
-                    limit,
-                    totalPage,
-                }
+                // count,
+                // pagination: {
+                //     page,
+                //     limit,
+                //     totalPage,
+                // }
             })
         } catch (error) {
             res.status(500).json({

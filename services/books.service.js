@@ -84,8 +84,12 @@ const bookService = {
         const skip = (page - 1) * limit
         return await Promise.all([
             Book.countDocuments(query), 
-            Book.find(query).populate('genre author publisher').skip(skip).limit(limit).sort(sort)])
+            // Book.find(query).populate('genre author publisher').skip(skip).limit(limit).sort(sort)])
+            Book.find(query).skip(skip).limit(limit).sort(sort)])
     },
+    getSales: async() => {
+        return await Book.find();
+    }
 }
 
 module.exports = bookService;
