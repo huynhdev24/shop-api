@@ -86,19 +86,19 @@ from sklearn.metrics.pairwise import cosine_similarity
 score = cosine_similarity(test_matrix)
 
 def Neighbor_by_cosine(book):
-    row_num = data[data['id_name_description'] == book].index.values[0] #getting the index of the article
-    similarity_score = list(enumerate(score[row_num])) #similar articles
-    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar articles and returning the first 5
+    row_num = data[data['id_name_description'] == book].index.values[0] #getting the index of the book
+    similarity_score = list(enumerate(score[row_num])) #similar books
+    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar books and returning the first 5
     
     i = 0
     for item in sorted_score:
-        article_title = data[data.index == item[0]]["id_name_description"].values[0] #getting the article title
-        recommendations = print(i+1, article_title) 
+        id_name_description = data[data.index == item[0]]["id_name_description"].values[0] #getting the book name
+        recommendations = print(i+1, id_name_description) 
         i = i + 1
     return recommendations #returns the 5 nearest article titles
 
 # book = '64181be7929948a83fd25110|___|Lịch Sử 7 (2021)|___|Sách giáo khoa Lịch Sử lớp 7 (Tái bản 2021)'
 # book = sys.argv[1]
-book =  sys.argv[1] + '|_|' + sys.argv[2] + '|_|' + sys.argv[3]
+book =  sys.argv[1]
 
 Neighbor_by_cosine(book)
