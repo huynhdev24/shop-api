@@ -1,15 +1,18 @@
 import pandas as pd
 import sys 
-
+import json
 # Đọc file Dataset CSV
 data = pd.read_csv('C:/shop/shop-api/data/bookstore/books.csv')
 
 # Tạo 1 cột mới có tên là description_name dựa trên thông tin của cột description (mô tả sách) + thông tin cột name (tên sách)
 # data['description_name'] = data['description'] + " " + data['name']
-data['id_name_description'] = data['_id'] + "|___|" + data['name'] + "|___|" +  data['description']
+# data['other_info'] = data['_id'] + "|___|" + str(data['price']) + "|___|" +  str(data['discount']) + "|___|" +  data['imageUrl'] + "|___|" +  data['slug']
+data['book_info'] = data['_id'] + "|___|" +  data['name'] + "|___|" +  data['description']
+
+# print(data['book_info'].head(5))
 
 # Xóa bỏ 2 cột không cần dùng đến description và name nữa vì đã có description_name
-data.drop(columns = ['description', 'name', '_id'], axis = 1, inplace = True)
+# data.drop(columns = ['description', 'name', '_id'], axis = 1, inplace = True)
 
 # loại bỏ data bị trùng lắp
 data.drop_duplicates(inplace = True)
@@ -24,8 +27,8 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 
 # download stopwords
-import nltk
-nltk.download('stopwords')
+# import nltk
+# nltk.download('stopwords')
 
 # chỉ định stopwords là tiếng Anh
 en_stopwords = stopwords.words("english")
@@ -45,7 +48,7 @@ def clean(text):
     return " ".join(clean_list)
 
 # kiểm tra data
-test = data.id_name_description.iloc[0]
+test = data.book_info.iloc[0]
 from nltk.stem import WordNetLemmatizer
 lemma = WordNetLemmatizer()
 
@@ -61,7 +64,7 @@ def cleanlemma(text):
     return " ".join(clean_list)
 
 # kiểm tra 1 bản ghi bất kì trong data.description_name
-test = data.id_name_description[3]
+test = data.book_info[3]
 test
 
 # clean cho bản ghi test ở trên
@@ -75,7 +78,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 vectorizer = TfidfVectorizer()
 
 # fit vector
-test_matrix = vectorizer.fit_transform(data.id_name_description)
+test_matrix = vectorizer.fit_transform(data.book_info)
 
 # liệt kê các ma trận từ vector
 test_matrix = test_matrix.toarray()
@@ -85,20 +88,34 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 score = cosine_similarity(test_matrix)
 
+# def Neighbor_by_cosine(book):
+#     row_num = data[data['id_name_description'] == book].index.values[0] #getting the index of the book
+#     similarity_score = list(enumerate(score[row_num])) #similar books
+#     sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar books and returning the first 5
+    
+#     i = 0
+#     for item in sorted_score:
+#         id_name_description = data[data.index == item[0]]["id_name_description"].values[0] #getting the book name
+#         recommendations = print(i+1, id_name_description) 
+#         i = i + 1
+#     return recommendations #returns the 5 nearest bookinfo
+
+# optimize
 def Neighbor_by_cosine(book):
-    row_num = data[data['id_name_description'] == book].index.values[0] #getting the index of the book
+    row_num = data[data['book_info'] == book].index.values[0] #getting the index of the book
     similarity_score = list(enumerate(score[row_num])) #similar books
     sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar books and returning the first 5
     
-    i = 0
+    # recommendations = {}
+    listbook = []
     for item in sorted_score:
-        id_name_description = data[data.index == item[0]]["id_name_description"].values[0] #getting the book name
-        recommendations = print(i+1, id_name_description) 
-        i = i + 1
-    return recommendations #returns the 5 nearest article titles
+        book_info = data[data.index == item[0]]["book_info"].values[0] #getting the book name
+        listbook.append(book_info)
+    return json.dumps(listbook) #returns the 5 nearest bookinfo
 
+# |___|6000|___|20|___|https://res.cloudinary.com/dbynglvwk/image/upload/v1653963583/bookstore/hpfjebw8i5cygplpl5zi.jpg|___|lich-su-7
 # book = '64181be7929948a83fd25110|___|Lịch Sử 7 (2021)|___|Sách giáo khoa Lịch Sử lớp 7 (Tái bản 2021)'
-# book = sys.argv[1]
-book =  sys.argv[1]
+book = sys.argv[1]
+# book =  sys.argv[1]
 
-Neighbor_by_cosine(book)
+print(Neighbor_by_cosine(book))

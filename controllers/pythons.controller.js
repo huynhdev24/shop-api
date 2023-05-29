@@ -1,48 +1,58 @@
-const pythonsController = {
-    getBooksRecommend: async(req, res) => {
-        try {
-            const page = req.query.page ? parseInt(req.query.page) : 1
-            const limit = req.query.limit ? parseInt(req.query.limit) : 0
-            const sort = req.query.sort ? req.query.sort : { createdAt: -1 }
-            const { query } = req.query
+const bookService = require('../services/books.service');
 
-            const queryObj = !!query ? query : {}
+const pythonsController = {
+    testPythonShell: async(req, res) => {
+        try {
+            var spawn = require('child_process').spawn;
+        var process = spawn('python', [
+            'C:/shop/shop-api/scripts/nlp_cosine.py',
+            req.query.bookinfo
+        ]);
+        process.stdout.on('data', async function(data) {
+            console.log(data.toString());
             
-            const [count, data] = await bookService.getAll({query: queryObj, page, limit, sort})
-            const totalPage = Math.ceil(count / limit)
-            
-            res.status(200).json({
-                message: 'success',
-                error: 0,
-                data,
-                count,
-                pagination: {
-                    page,
-                    limit,
-                    totalPage,
+            // handle data get from Python train NLP
+            // const res = JSON.parse(data)
+            // console.log(res);
+            if(data) {
+                let listBookNLP = JSON.parse(data);
+                let listData = []
+                for(let i = 0; i < listBookNLP.length; i++){
+                    listData.push(listBookNLP[i].split("|___|")[0])
                 }
-            })
+
+                // res.send(JSON.parse(data));
+                let listBookNLP_Final = [];
+                for(let i = 0; i < listData.length; i++) {
+                    const book = await bookService.getById(listData[i]);
+                    listBookNLP_Final.push(book);
+                }
+                // res.send(listBookNLP_Final);
+                res.status(200).json({
+                    message: 'success',
+                    error: 0,
+                    listBookNLP_Final,
+                    // count,
+                    // pagination: {
+                    //     page,
+                    //     limit,
+                    //     totalPage,
+                    // }
+                })
+            } else {
+                res.status(500).json({
+                    message: `Có lỗi xảy ra! ${error.message}`,
+                    error: 1,
+                })
+            }
+        });
         } catch (error) {
             res.status(500).json({
                 message: `Có lỗi xảy ra! ${error.message}`,
                 error: 1,
             })
         }
-    },
-    testPythonShell: async(req, res) => {
-        var spawn = require('child_process').spawn;
-        // req.query.firstname,
-        // req.query.lastname
-        // E.g : http://localhost:3000/name?firstname=van&lastname=nghia
-        var process = spawn('python', [
-            'C:/shop/shop-api/scripts/nlp_cosine.py',
-            req.query.bookinfo
-        ]);
-        process.stdout.on('data', function(data) {
-            console.log(data.toString());
         
-            res.send(data.toString());
-        });
     }
 }
 
