@@ -184,7 +184,7 @@ const importCSV = {
                 if (err) {
                     res.send({status: 400, success: false, msg: error.message});
                 } else{
-                    res.status(200).end('It\'s saved!');
+                    res.status(200).send({status: 200, success: true, msg: 'thành công'});
                 }
             });
             // res.status(200).end("\uFEFF" + csvData);
