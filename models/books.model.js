@@ -59,7 +59,7 @@ const sluggerOptions = new slugger.SluggerOptions({
     // specify the properties which will be used for generating the slug
     generateFrom: ['name', 'bookId'],
     // specify the max length for the slug
-    maxLength: 30,
+    maxLength: 100,
     // the unique index, see above
     index: 'name_slug'
   });

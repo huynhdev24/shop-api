@@ -4,14 +4,16 @@ import json
 # Đọc file Dataset CSV
 data = pd.read_csv('C:/shop/shop-api/data/bookstore/books.csv')
 
-print(data.head(5))
+print('STEP 1 \n')
+print(data.head(5), end='\n')
 
 # Tạo 1 cột mới có tên là description_name dựa trên thông tin của cột description (mô tả sách) + thông tin cột name (tên sách)
 # data['description_name'] = data['description'] + " " + data['name']
 # data['other_info'] = data['_id'] + "|___|" + str(data['price']) + "|___|" +  str(data['discount']) + "|___|" +  data['imageUrl'] + "|___|" +  data['slug']
 data['book_info'] = data['_id'] + "|___|" +  data['name'] + "|___|" +  data['description']
 
-print(data["book_info"].head(5))
+print('STEP 2 \n')
+print(data["book_info"].head(5), end='\n')
 
 # print(data['book_info'].head(5))
 
@@ -37,12 +39,14 @@ from nltk.stem import PorterStemmer
 # chỉ định stopwords là tiếng Anh
 en_stopwords = stopwords.words("english")
 
-print(en_stopwords)
+print('STEP 3 \n')
+print(en_stopwords, end='\n')
 
 # khởi tạo stemmer
 stemmer = PorterStemmer()
 
-print(stemmer)
+print('STEP 4 \n')
+print(stemmer, end='\n')
 
 # xây dựng hàm clean cho đoan text - văn bản thô (data sẽ xử lý chính là data['description_name] cần xử lý)
 def clean(text):
@@ -57,11 +61,16 @@ def clean(text):
 
 # kiểm tra data
 test = data.book_info.iloc[0]
+print('STEP 5 \n')
+print(test, end='\n')
+
 from nltk.stem import WordNetLemmatizer
 lemma = WordNetLemmatizer()
 
-print(test)
-print(lemma)
+print('STEP 6 \n')
+print(test, end='\n')
+print('STEP 7 \n')
+print(lemma, end='\n')
 
 # xây dựng cleanlemma cho đoạn text cần kiểm tra tương tự clean
 def cleanlemma(text):
@@ -78,11 +87,13 @@ def cleanlemma(text):
 test = data.book_info[3]
 test
 
-print(test)
+print('STEP 8 \n')
+print(test, end='\n')
 
 # clean cho bản ghi test ở trên
-clean(test)
-cleanlemma(test)
+print('STEP 8-A \n')
+print(clean(test), end='\n')
+print(cleanlemma(test), end='\n')
 
 # giai đoạn Vector hóa văn bản
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -90,49 +101,46 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 # khởi tạo vectorizer
 vectorizer = TfidfVectorizer()
 
-print(vectorizer)
+print('STEP 9 \n')
+print(vectorizer, end='\n')
 
 # fit vector
 test_matrix = vectorizer.fit_transform(data.book_info)
 
-print(test_matrix)
+print('STEP 10 \n')
+print(test_matrix, end='\n')
 
 # liệt kê các ma trận từ vector
 test_matrix = test_matrix.toarray()
 
-print(test_matrix)
+print('STEP 11 \n')
+print(test_matrix, end='\n')
 
 # thêm hàm hỗ trợ cosine_similarity
 from sklearn.metrics.pairwise import cosine_similarity
 
 score = cosine_similarity(test_matrix)
 
-print(score)
-
-# def Neighbor_by_cosine(book):
-#     row_num = data[data['id_name_description'] == book].index.values[0] #getting the index of the book
-#     similarity_score = list(enumerate(score[row_num])) #similar books
-#     sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar books and returning the first 5
-    
-#     i = 0
-#     for item in sorted_score:
-#         id_name_description = data[data.index == item[0]]["id_name_description"].values[0] #getting the book name
-#         recommendations = print(i+1, id_name_description) 
-#         i = i + 1
-#     return recommendations #returns the 5 nearest bookinfo
+print('STEP 12 \n')
+print(score, end='\n')
 
 # optimize
-def Neighbor_by_cosine(book):
+def Recommend_neighbor_by_cosine(book):
     row_num = data[data['book_info'] == book].index.values[0] #getting the index of the book
-    print(row_num)
+    print('STEP 13 \n')
+    print(row_num, end='\n')
     similarity_score = list(enumerate(score[row_num])) #similar books
-    print(similarity_score)
+    print('STEP 14 \n')
+    print(similarity_score, end='\n')
     sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:4] #sorting similar books and returning the first 5
-    print(sorted_score)
+    print('STEP 15 \n')
+    print(sorted_score, end='\n')
     # recommendations = {}
     listbook = []
     for item in sorted_score:
         book_info = data[data.index == item[0]]["book_info"].values[0] #getting the book name
+        print('STEP 16 \n')
+        print(book_info, end='\n')
         listbook.append(book_info)
     return json.dumps(listbook) #returns the 5 nearest bookinfo
 
@@ -142,4 +150,5 @@ book = '64708a5f3cd4c49d331d712d|___|Harry Potter and the Goblet of Fire|___|Hay
 # book = sys.argv[1]
 # book =  sys.argv[1]
 
-print(Neighbor_by_cosine(book))
+print('STEP 17 \n')
+print(Recommend_neighbor_by_cosine(book), end='\n')
