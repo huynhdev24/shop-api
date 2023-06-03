@@ -88,21 +88,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 score = cosine_similarity(test_matrix)
 
-# def Neighbor_by_cosine(book):
-#     row_num = data[data['id_name_description'] == book].index.values[0] #getting the index of the book
-#     similarity_score = list(enumerate(score[row_num])) #similar books
-#     sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar books and returning the first 5
-    
-#     i = 0
-#     for item in sorted_score:
-#         id_name_description = data[data.index == item[0]]["id_name_description"].values[0] #getting the book name
-#         recommendations = print(i+1, id_name_description) 
-#         i = i + 1
-#     return recommendations #returns the 5 nearest bookinfo
-
 # optimize
 def Neighbor_by_cosine(book):
-    row_num = data[data['book_info'] == book].index.values[0] #getting the index of the book
+    row_num = data[data['_id'] == book].index.values[0] #getting the index of the book
     similarity_score = list(enumerate(score[row_num])) #similar books
     sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar books and returning the first 5
     
@@ -110,7 +98,8 @@ def Neighbor_by_cosine(book):
     listbook = []
     for item in sorted_score:
         book_info = data[data.index == item[0]]["book_info"].values[0] #getting the book name
-        listbook.append(book_info)
+        book_info_split_id = book_info.split("|___|")[0]
+        listbook.append(book_info_split_id)
     return json.dumps(listbook) #returns the 5 nearest bookinfo
 
 # |___|6000|___|20|___|https://res.cloudinary.com/dbynglvwk/image/upload/v1653963583/bookstore/hpfjebw8i5cygplpl5zi.jpg|___|lich-su-7

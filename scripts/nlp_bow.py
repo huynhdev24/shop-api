@@ -126,13 +126,14 @@ print(score, end='\n')
 
 # optimize
 def Recommend_neighbor_by_cosine(book):
-    row_num = data[data['book_info'] == book].index.values[0] #getting the index of the book
+    # row_num = data[data['book_info'] == book].index.values[0] #getting the index of the book
+    row_num = data[data['_id'] == book].index.values[0] #getting the index of the book
     print('STEP 13 \n')
     print(row_num, end='\n')
     similarity_score = list(enumerate(score[row_num])) #similar books
     print('STEP 14 \n')
     print(similarity_score, end='\n')
-    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:4] #sorting similar books and returning the first 5
+    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:9] #sorting similar books and returning the first 5
     print('STEP 15 \n')
     print(sorted_score, end='\n')
     # recommendations = {}
@@ -140,15 +141,19 @@ def Recommend_neighbor_by_cosine(book):
     for item in sorted_score:
         book_info = data[data.index == item[0]]["book_info"].values[0] #getting the book name
         print('STEP 16 \n')
-        print(book_info, end='\n')
-        listbook.append(book_info)
+        print(book_info)
+        print(book_info.split("|___|")[0], end='\n')
+        book_info_split_id = book_info.split("|___|")[0]
+        listbook.append(book_info_split_id)
     return json.dumps(listbook) #returns the 5 nearest bookinfo
 
 # |___|6000|___|20|___|https://res.cloudinary.com/dbynglvwk/image/upload/v1653963583/bookstore/hpfjebw8i5cygplpl5zi.jpg|___|lich-su-7
 # book = '64181be7929948a83fd25110|___|Lịch Sử 7 (2021)|___|Sách giáo khoa Lịch Sử lớp 7 (Tái bản 2021)'
-book = '64708a5f3cd4c49d331d712d|___|Harry Potter and the Goblet of Fire|___|Hay'
+# book = '64708a5f3cd4c49d331d712d|___|Harry Potter and the Goblet of Fire|___|Hay'
+# book = '6479bc4e5a8ce8897f4b5f7a|___|Kỹ Năng Sống Dành Cho Học Sinh Tiểu Học - 50 Điều Cần Thiết Cho Học Sinh Tiểu Học (Tập 1)|___|<p>Khi trẻ bắt đầu đến trường sẽ có muôn vàn điều bỡ ngỡ và có nhiều thắc mắc. Là cha mẹ, ắt hẳn tâm lý lo lắng cũng không kém con em mình. Tập sách&nbsp;<strong>Kỹ Năng Sống Dành Cho Học Sinh Tiểu Học&nbsp;</strong>sẽ&nbsp;rèn luyện kỹ năng cho bé khi bé bước vào lớp 1. Sách ngắn gọn, trình bày dễ hiểu, sống động sẽ giúp con bạn rèn được nhiều kỹ năng bổ ích.</p><p>Cuốn sách sẽ là hành trang giúp bé vững vàng hơn ở ngưỡng cửa Tiểu Học.</p>'
 # book = sys.argv[1]
 # book =  sys.argv[1]
+book = '6476015cb0d3d985c58fc42f'
 
 print('STEP 17 \n')
 print(Recommend_neighbor_by_cosine(book), end='\n')
