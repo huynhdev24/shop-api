@@ -24,9 +24,12 @@ const pythonsController = {
                         // const objectId = new ObjectId(listBookNLP[i])  
                         listData.push(listBookNLP[i])
                     }
-
+                    
+                    //get data of book_info
+                    const book_info_data = await bookService.getById(req.query.bookinfo);
                     // res.send(JSON.parse(data));
                     let listBookNLP_Final = [];
+                    listBookNLP_Final.push(book_info_data)
                     for (let i = 0; i < listData.length; i++) {
                         const book = await bookService.getById(listData[i]);
                         listBookNLP_Final.push(book);
