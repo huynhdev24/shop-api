@@ -91,19 +91,28 @@ score = cosine_similarity(test_matrix)
 # optimize
 def Neighbor_by_cosine(book):
     row_num = data[data['_id'] == book].index.values[0] #getting the index of the book
+    print("ROW NUM \n")
+    print(row_num)
     similarity_score = list(enumerate(score[row_num])) #similar books
+    print("SIMILARITY SCORE \n")
+    print(similarity_score)
     sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:8] #sorting similar books and returning the first 7
-    
+    print("SORTED SCORE \n")
+    print(sorted_score)
     # recommendations = {}
     listbook = []
+    print("LIST BOOK \n")
     for item in sorted_score:
         book_info = data[data.index == item[0]]["book_info"].values[0] #getting the book name
+        print("BOOK INFO" + str(item) + '\n')
         book_info_split_id = book_info.split("|___|")[0]
+        print("BOOK INFO SPLIT ID" + str(book_info_split_id) + '\n')
         listbook.append(book_info_split_id)
     return json.dumps(listbook) #returns the 5 nearest bookinfo
 
 # book = '64181be7929948a83fd25110|___|Lịch Sử 7 (2021)|___|Sách giáo khoa Lịch Sử lớp 7 (Tái bản 2021)'
-book = sys.argv[1]
+# book = sys.argv[1]
 # book =  sys.argv[1]
+book = '6476015cb0d3d985c58fc42f'
 
 print(Neighbor_by_cosine(book))

@@ -13,6 +13,7 @@ const historyRouter = require('./history');
 const importRouter = require('./cvstojson.js');
 const ratingRouter = require('./ratings');
 const pythonRouter = require('./pythons.js');
+const recommendRouter = require('./recommend.js');
 function routes(app) {
     
     app.use('/api/v1/genres', genreRouter);
@@ -29,6 +30,7 @@ function routes(app) {
     app.use('/api/v1/import', importRouter);
     app.use('/api/v1/rating', ratingRouter);
     app.use('/api/v1/pythons', pythonRouter);
+    app.use('/api/v1/recommend', recommendRouter);
 
     app.use('*', function(req, res) {
         res.status(404).json({
