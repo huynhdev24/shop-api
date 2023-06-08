@@ -10,6 +10,9 @@ const recommendService = {
     getById: async(id) => {
         return await Recommend.findById(id).populate("product")
     },
+    checkExistById: async(bookId) => {
+        return await Recommend.findOne({productRecommendId: bookId}).populate("product")
+    },
     create: async({ productRecommendId, product}) => {
         console.log(productRecommendId + ' ' + product);
         const newRecommend = new Recommend({

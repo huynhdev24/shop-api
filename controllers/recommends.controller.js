@@ -58,6 +58,9 @@ const recommendController = {
     },
     create: async(req, res) => {
         try {
+            const bookId = req.body.productRecommendId;
+            const isExist = await recommendService.checkExistById(bookId);
+            if (isExist) return res.status(400).json({message: "Sách này đã được lưu kết quả training!", error: 1})
             const data = await recommendService.create(req.body)
             res.status(201).json({
                 message: 'success',
