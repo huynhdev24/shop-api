@@ -8,7 +8,8 @@ const recommendService = {
     //         Recommend.find(query).skip(skip).limit(limit).sort(sort)])
     // },
     getById: async(id) => {
-        return await Recommend.findById(id).populate("product")
+        // return await Recommend.findById(id).populate("product")
+        return await Recommend.findOne({productRecommendId: id}).populate("product")
     },
     checkExistById: async(bookId) => {
         return await Recommend.findOne({productRecommendId: bookId}).populate("product")
@@ -20,6 +21,10 @@ const recommendService = {
             product,
         })
         return await newRecommend.save()
+    },
+    update: async({ productRecommendId, product}) => {
+        console.log(productRecommendId + ' ' + product);
+        return await Recommend.findOneAndUpdate({productRecommendId: productRecommendId}, {product: product}).populate("product")
     },
 }
 
