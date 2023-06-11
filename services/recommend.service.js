@@ -26,6 +26,12 @@ const recommendService = {
         console.log(productRecommendId + ' ' + product);
         return await Recommend.findOneAndUpdate({productRecommendId: productRecommendId}, {product: product}).populate("product")
     },
+    delete: async(id) => {
+        return await Recommend.findOneAndDelete({productRecommendId: id}).populate("product")
+    },
+    deleteAll: async() => {
+        return await Recommend.deleteMany();
+    }
 }
 
 module.exports = recommendService;

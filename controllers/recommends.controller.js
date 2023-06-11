@@ -120,6 +120,13 @@ const recommendController = {
                     error: 0,
                     data
                 })
+                // const del = await recommendService.delete(bookId)
+                // const data = await recommendService.create(req.body)
+                // res.status(201).json({
+                //     message: 'Kết quả training đã được cập nhật!',
+                //     error: 0,
+                //     data
+                // })
             } else {
                 const data = await recommendService.create(req.body)
                 res.status(201).json({
@@ -135,6 +142,30 @@ const recommendController = {
             })
         }
     },
+    deleteAll: async(req, res) => {
+        try {
+            const data = await recommendService.deleteAll();
+            if (data) {
+                return res.status(200).json({
+                    message: 'success',
+                    error: 0,
+                    data
+                })
+            } else {
+                return res.status(404).json({
+                    message: `Xóa cache thất bại`,
+                    error: 1,
+                    data
+                })
+            }
+            
+        } catch (error) {
+            res.status(400).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
+    }
 }
 
 module.exports = recommendController;
