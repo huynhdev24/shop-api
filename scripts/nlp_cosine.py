@@ -90,17 +90,17 @@ score = cosine_similarity(test_matrix)
 
 # optimize
 def Neighbor_by_cosine(book):
-    row_num = data[data['_id'] == book].index.values[0] #getting the index of the book
-    similarity_score = list(enumerate(score[row_num])) #similar books
-    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:8] #sorting similar books and returning the first 7
+    row_num = data[data['_id'] == book].index.values[0] #lấy chỉ mục (id) của cuốn sách
+    similarity_score = list(enumerate(score[row_num])) #sách tương tự
+    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:4] #sắp xếp những cuốn sách tương tự và trả lại 7 cuốn đầu tiên
     
     # recommendations = {}
     listbook = []
     for item in sorted_score:
-        book_info = data[data.index == item[0]]["book_info"].values[0] #getting the book name
+        book_info = data[data.index == item[0]]["book_info"].values[0] #lấy tên sách
         book_info_split_id = book_info.split("|___|")[0]
         listbook.append(book_info_split_id)
-    return json.dumps(listbook) #returns the 5 nearest bookinfo
+    return json.dumps(listbook) #trả về 7 thông tin sách gần nhất với sách đã cho
 
 # book = '64181be7929948a83fd25110|___|Lịch Sử 7 (2021)|___|Sách giáo khoa Lịch Sử lớp 7 (Tái bản 2021)'
 book = sys.argv[1]
