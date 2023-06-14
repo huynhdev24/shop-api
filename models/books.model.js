@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 //Disabled
-// const slug = require('mongoose-slug-generator');
 const slugger = require('mongoose-slugger-plugin');
 
 const Schema = mongoose.Schema;

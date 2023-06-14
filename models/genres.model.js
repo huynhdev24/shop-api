@@ -1,8 +1,4 @@
 const mongoose = require('mongoose');
-// const slug = require('mongoose-slug-generator');
-
-// mongoose.plugin(slug);
-
 const Schema = mongoose.Schema;
 
 const genreSchema = new Schema({
@@ -10,11 +6,6 @@ const genreSchema = new Schema({
         type: String,
         required: true
     },
-    // slug: {
-    //     type: String,
-    //     slug: 'name',
-    //     unique: true
-    // }
     slug: {
         type: String,
     }
