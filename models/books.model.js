@@ -15,11 +15,6 @@ const bookSchema = new Schema({
         type: String,
         required: true
     },
-    // slug: {
-    //     type: String,
-    //     slug: 'name',
-    //     unique: true
-    // },
     slug: {
         type: String,
     },
@@ -66,9 +61,3 @@ const sluggerOptions = new slugger.SluggerOptions({
 bookSchema.plugin(slugger.plugin, sluggerOptions);
 
 module.exports = slugger.wrap(mongoose.model('Book', bookSchema));
-
-
-// Add plugins
-// mongoose.plugin(slug);
-
-// module.exports = mongoose.model('Book', bookSchema);
