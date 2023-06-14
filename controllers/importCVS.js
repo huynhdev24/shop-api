@@ -6,8 +6,6 @@ var Book = require('../models/books.model');
 var User = require('../models/users.model');
 var cvs = require('csvtojson');
 const CsvParser = require('json2csv').Parser;
-var Iconv = require("iconv").Iconv;
-var iconv = new Iconv('utf8', 'utf16le');
 var fs = require('fs');
 
 const importCSV = {
