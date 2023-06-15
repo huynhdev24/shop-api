@@ -43,11 +43,20 @@ const bookService = {
                     as: "author"
                 }
             },
+            {
+                $lookup: {
+                    from: "genres",
+                    localField: "genre",
+                    foreignField: "_id",
+                    as: "genre"
+                }
+            },
             { 
                 $match: {
                     $or: [
                         { name: { $regex: key, $options:"$i" } }, 
-                        { "author.name": { $regex: key, $options:"$i" } } 
+                        { "author.name": { $regex: key, $options:"$i" } },
+                        { "genre.name": { $regex: key, $options:"$i" } }
                     ]
                 }
             },
