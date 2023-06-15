@@ -3,6 +3,9 @@ const Order = require('../models/orders.model');
 const mongoose = require("mongoose");
 
 const bookService = {
+    getAllBookData: async() => {
+        return await Book.find({});
+    },
     getAll: async({query, page, limit, sort}) => {
         const skip = (page - 1) * limit
         return await Promise.all([
