@@ -15,5 +15,6 @@ router.put('/:id', verifyToken, checkRole([RoleEnum.Staff, RoleEnum.Admin]), boo
 router.delete('/:id', verifyToken, checkRole([RoleEnum.Staff, RoleEnum.Admin]), bookController.deleteById);
 router.get('/sell', bookController.getBestProducts);
 router.get('/sale', bookController.getBestProducts);
+router.get('/all', bookController.getAllBookData);
 
 module.exports = router;

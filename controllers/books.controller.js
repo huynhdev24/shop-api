@@ -2,6 +2,29 @@ const bookService = require('../services/books.service');
 const { cloudinary } = require('../config/cloudinary');
 
 const bookController = {
+    getAllBookData: async(req, res) => {
+        try {
+            const data = await bookService.getAllBookData();
+            if (data) {
+                res.status(200).json({
+                    message: 'success',
+                    error: 0,
+                    data
+                })
+            } else {
+                res.status(200).json({
+                    message: 'Danh sách sách rỗng!',
+                    error: 1,
+                    data
+                })
+            }
+        } catch (error) {
+            res.status(500).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
+    },
     getAll: async(req, res) => {
         try {
             const page = req.query.page ? parseInt(req.query.page) : 1

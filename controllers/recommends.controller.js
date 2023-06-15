@@ -2,36 +2,36 @@ const recommendService = require('../services/recommend.service');
 const pythonsController = require('../controllers/pythons.controller');
 const bookService = require('../services/books.service');
 const recommendController = {
-    // getAll: async(req, res) => {
-    //     try {
-    //         const page = req.query.page ? parseInt(req.query.page) : 1
-    //         const limit = req.query.limit ? parseInt(req.query.limit) : 0
-    //         const sortByDate = req.query.sortByDate
+    getAll: async(req, res) => {
+        try {
+            const page = req.query.page ? parseInt(req.query.page) : 1
+            const limit = req.query.limit ? parseInt(req.query.limit) : 0
+            const sortByDate = req.query.sortByDate
 
-    //         let sort = {}
-    //         if (sortByDate) sort.createdAt = sortByDate === "asc" ? 1 : -1
+            let sort = {}
+            if (sortByDate) sort.createdAt = sortByDate === "asc" ? 1 : -1
 
-    //         const [count, data ] = await recommendService.getAll({page, limit, sort})
-    //         const totalPage = Math.ceil(count / limit)
+            const [count, data ] = await recommendService.getAll({page, limit, sort})
+            const totalPage = Math.ceil(count / limit)
 
-    //         res.status(200).json({
-    //             message: 'success',
-    //             error: 0,
-    //             count,
-    //             data,
-    //             pagination: {
-    //                 page,
-    //                 limit,
-    //                 totalPage,
-    //             }
-    //         })
-    //     } catch (error) {
-    //         res.status(500).json({
-    //             message: `Có lỗi xảy ra! ${error.message}`,
-    //             error: 1,
-    //         })
-    //     }
-    // },
+            res.status(200).json({
+                message: 'success',
+                error: 0,
+                count,
+                data,
+                pagination: {
+                    page,
+                    limit,
+                    totalPage,
+                }
+            })
+        } catch (error) {
+            res.status(500).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
+    },
     getById: async (req, res) => {
         try {
             const { id } = req.params
