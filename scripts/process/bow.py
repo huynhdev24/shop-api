@@ -7,7 +7,9 @@ data = pd.read_csv('C:/shop/shop-api/data/bookstore/books.csv')
 # Tạo 1 cột mới có tên là description_name dựa trên thông tin của cột description (mô tả sách) + thông tin cột name (tên sách)
 # data['description_name'] = data['description'] + " " + data['name']
 # data['other_info'] = data['_id'] + "|___|" + str(data['price']) + "|___|" +  str(data['discount']) + "|___|" +  data['imageUrl'] + "|___|" +  data['slug']
-data['book_info'] = data['_id'] + "|___|" +  data['name'] + "|___|" +  data['description']
+# data['book_info'] = data['_id'] + "|___|" +  data['name'] + "|___|" +  data['description']
+# data['book_info'] = data['_id'] + "|___|" +  data['name'] + "|___|" +  data['genre'] + data['author']
+data['book_info'] = data['_id'] + "|___|" +  data['name']
 
 # print(data['book_info'].head(5))
 
