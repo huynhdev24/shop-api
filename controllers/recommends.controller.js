@@ -62,7 +62,7 @@ const recommendController = {
                 console.log(id);
                 var spawn = require('child_process').spawn;
                 var process = spawn('python', [
-                    'C:/shop/shop-api/scripts/nlp_cosine.py',
+                    'C:/shop/shop-api/scripts/nlp/nlp_cosine.py',
                     id
                 ]);
                 process.stdout.on('data', async function (_data) {
