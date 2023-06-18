@@ -101,7 +101,15 @@ const bookService = {
     },
     getSales: async() => {
         return await Book.find();
-    }
+    },
+    // tạo mới 1 cuốn sách
+    createBookDataset: async(body) => {
+        const { bookId, name, year, genre, author, publisher, description,
+            pages, size, price, discount, imageUrl, publicId } = body
+        const newBook = new Book({bookId, name, year, genre, description,
+            author, publisher, pages, size, price, discount, imageUrl, publicId})
+        return await newBook.save()
+    },
 }
 
 module.exports = bookService;

@@ -291,6 +291,25 @@ const bookController = {
             })
         }
     },
+    // tạo 1 cuốn sách mới
+    createBookDataset: async(req, res) => {
+        try {
+            const { bookId } = req.body
+            const isExist = await bookService.getByBookId(bookId)
+            if (isExist) return res.status(400).json({message: "bookId đã tồn tại!", error: 1}) 
+            const data = await bookService.createBookDataset(req.body)
+            return res.status(201).json({
+                message: 'success',
+                error: 0,
+                data
+            })
+        } catch (error) {
+            res.status(400).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
+    },
 }
 
 module.exports = bookController;
