@@ -4,6 +4,7 @@ var Genre = require('../models/genres.model');
 var Rating = require('../models/ratings.model');
 var Book = require('../models/books.model');
 var User = require('../models/users.model');
+var Publisher = require('../models/publishers.model');
 var cvs = require('csvtojson');
 const CsvParser = require('json2csv').Parser;
 var fs = require('fs');
@@ -166,6 +167,25 @@ const importCSV = {
 
             bookData.forEach((book) => {
                 const { _id, bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId } = book;
+                // var publisherName = await Publisher.findById(publisher);
+                // let genreAll = [];
+                // let authorAll = [];
+                // var genreData = genre;
+                // for(let i = 0; i < book.genre.length; i++) {
+                //     genreAll.push(genre[i])
+                // }
+                // const genreAll = genre.forEach((g) => {
+                //     genreAllTemp = g + '|___|';
+                // })
+                // console.log(genreAll);
+                // for(let i = 0; i < book.author.length; i++) {
+                //     authorAll.push(author[i])
+                // }
+                // const authorAll = author.forEach((a) => {
+                //     authorAllTemp = a + '|___|';
+                // })
+                // console.log(authorAll);
+                // books.push({ _id, bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId });
                 books.push({ _id, bookId, name, year, price, pages, genre, author, publisher, slug, size, description, discount, imageUrl, publicId });
             })
 

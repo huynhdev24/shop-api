@@ -10,7 +10,7 @@ const pythonsController = {
             console.log(req.query.bookinfo);
             var spawn = require('child_process').spawn;
             var process = spawn('python', [
-                'C:/shop/shop-api/scripts/nlp_cosine.py',
+                'C:/shop/shop-api/scripts/nlp/nlp_cosine.py',
                 req.query.bookinfo
             ]);
             process.stdout.on('data', async function (data) {

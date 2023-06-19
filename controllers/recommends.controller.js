@@ -2,36 +2,61 @@ const recommendService = require('../services/recommend.service');
 const pythonsController = require('../controllers/pythons.controller');
 const bookService = require('../services/books.service');
 const recommendController = {
-    // getAll: async(req, res) => {
-    //     try {
-    //         const page = req.query.page ? parseInt(req.query.page) : 1
-    //         const limit = req.query.limit ? parseInt(req.query.limit) : 0
-    //         const sortByDate = req.query.sortByDate
+    trainNLP: async(req, res) => {
+        try {
+            const bookList = await bookService.getAllBookData();
+            console.log(bookList)
+            const data = await recommendService.trainList(bookList);
+            // if (data === 0) {
+            //     res.status(200).json({
+            //         message: 'Training success!',
+            //         error: 0,
+            //         data
+            //     })
+            // } else {
+            //     res.status(200).json({
+            //         message: 'Không tìm thấy sách!',
+            //         error: 1,
+            //         data
+            //     })
+            // }
+        } catch (error) {
+            // res.status(500).json({
+            //     message: `Có lỗi xảy ra! ${error.message}`,
+            //     error: 1,
+            // })
+        }
+    },
+    getAll: async(req, res) => {
+        try {
+            const page = req.query.page ? parseInt(req.query.page) : 1
+            const limit = req.query.limit ? parseInt(req.query.limit) : 0
+            const sortByDate = req.query.sortByDate
 
-    //         let sort = {}
-    //         if (sortByDate) sort.createdAt = sortByDate === "asc" ? 1 : -1
+            let sort = {}
+            if (sortByDate) sort.createdAt = sortByDate === "asc" ? 1 : -1
 
-    //         const [count, data ] = await recommendService.getAll({page, limit, sort})
-    //         const totalPage = Math.ceil(count / limit)
+            const [count, data ] = await recommendService.getAll({page, limit, sort})
+            const totalPage = Math.ceil(count / limit)
 
-    //         res.status(200).json({
-    //             message: 'success',
-    //             error: 0,
-    //             count,
-    //             data,
-    //             pagination: {
-    //                 page,
-    //                 limit,
-    //                 totalPage,
-    //             }
-    //         })
-    //     } catch (error) {
-    //         res.status(500).json({
-    //             message: `Có lỗi xảy ra! ${error.message}`,
-    //             error: 1,
-    //         })
-    //     }
-    // },
+            res.status(200).json({
+                message: 'success',
+                error: 0,
+                count,
+                data,
+                pagination: {
+                    page,
+                    limit,
+                    totalPage,
+                }
+            })
+        } catch (error) {
+            res.status(500).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
+    },
     getById: async (req, res) => {
         try {
             const { id } = req.params
@@ -62,7 +87,7 @@ const recommendController = {
                 console.log(id);
                 var spawn = require('child_process').spawn;
                 var process = spawn('python', [
-                    'C:/shop/shop-api/scripts/nlp_cosine.py',
+                    'C:/shop/shop-api/scripts/nlp/nlp_cosine.py',
                     id
                 ]);
                 process.stdout.on('data', async function (_data) {

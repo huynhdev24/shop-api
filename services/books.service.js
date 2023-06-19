@@ -3,6 +3,9 @@ const Order = require('../models/orders.model');
 const mongoose = require("mongoose");
 
 const bookService = {
+    getAllBookData: async() => {
+        return await Book.find({});
+    },
     getAll: async({query, page, limit, sort}) => {
         const skip = (page - 1) * limit
         return await Promise.all([
@@ -40,11 +43,20 @@ const bookService = {
                     as: "author"
                 }
             },
+            {
+                $lookup: {
+                    from: "genres",
+                    localField: "genre",
+                    foreignField: "_id",
+                    as: "genre"
+                }
+            },
             { 
                 $match: {
                     $or: [
                         { name: { $regex: key, $options:"$i" } }, 
-                        { "author.name": { $regex: key, $options:"$i" } } 
+                        { "author.name": { $regex: key, $options:"$i" } },
+                        { "genre.name": { $regex: key, $options:"$i" } }
                     ]
                 }
             },
@@ -89,7 +101,15 @@ const bookService = {
     },
     getSales: async() => {
         return await Book.find();
-    }
+    },
+    // tạo mới 1 cuốn sách
+    createBookDataset: async(body) => {
+        const { bookId, name, year, genre, author, publisher, description,
+            pages, size, price, discount, imageUrl, publicId } = body
+        const newBook = new Book({bookId, name, year, genre, description,
+            author, publisher, pages, size, price, discount, imageUrl, publicId})
+        return await newBook.save()
+    },
 }
 
 module.exports = bookService;

@@ -8,7 +8,6 @@ data = pd.read_csv('C:/shop/shop-api/data/bookstore/books.csv')
 # data['description_name'] = data['description'] + " " + data['name']
 # data['other_info'] = data['_id'] + "|___|" + str(data['price']) + "|___|" +  str(data['discount']) + "|___|" +  data['imageUrl'] + "|___|" +  data['slug']
 # data['book_info'] = data['_id'] + "|___|" +  data['name'] + "|___|" +  data['description']
-# data['book_info'] = data['_id'] + "|___|" +  data['name'] + "|___|" +  data['genre'] + data['author']
 data['book_info'] = data['_id'] + "|___|" +  data['name']
 
 # print(data['book_info'].head(5))
@@ -38,7 +37,7 @@ en_stopwords = stopwords.words("english")
 # khởi tạo stemmer
 stemmer = PorterStemmer()
 
-# xây dựng hàm clean cho đoan text - văn bản thô (data sẽ xử lý chính là data['description_name] cần xử lý)
+# xây dựng hàm clean cho đoan text - văn bản thô (data sẽ xử lý chính là data['book_info'] cần xử lý)
 def clean(text):
     text = re.sub("[^A-Za-z1-9 ]", "", text)
     text = text.lower()
@@ -92,29 +91,20 @@ score = cosine_similarity(test_matrix)
 
 # optimize
 def Neighbor_by_cosine(book):
-    row_num = data[data['_id'] == book].index.values[0] #getting the index of the book
-    print("ROW NUM \n")
-    print(row_num)
-    similarity_score = list(enumerate(score[row_num])) #similar books
-    print("SIMILARITY SCORE \n")
-    print(similarity_score)
-    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:8] #sorting similar books and returning the first 7
-    print("SORTED SCORE \n")
-    print(sorted_score)
+    row_num = data[data['_id'] == book].index.values[0] #lấy chỉ mục (id) của cuốn sách
+    similarity_score = list(enumerate(score[row_num])) #sách tương tự
+    sorted_score = sorted(similarity_score, key=lambda x:x[1], reverse= True)[1:16] #sắp xếp những cuốn sách tương tự và trả lại N cuốn đầu tiên
+    
     # recommendations = {}
     listbook = []
-    print("LIST BOOK \n")
     for item in sorted_score:
-        book_info = data[data.index == item[0]]["book_info"].values[0] #getting the book name
-        print("BOOK INFO" + str(item) + '\n')
+        book_info = data[data.index == item[0]]["book_info"].values[0] #lấy tên sách
         book_info_split_id = book_info.split("|___|")[0]
-        print("BOOK INFO SPLIT ID" + str(book_info_split_id) + '\n')
         listbook.append(book_info_split_id)
-    return json.dumps(listbook) #returns the 5 nearest bookinfo
+    return json.dumps(listbook) #trả về 7 thông tin sách gần nhất với sách đã cho
 
 # book = '64181be7929948a83fd25110|___|Lịch Sử 7 (2021)|___|Sách giáo khoa Lịch Sử lớp 7 (Tái bản 2021)'
-# book = sys.argv[1]
+book = sys.argv[1]
 # book =  sys.argv[1]
-book = '6476015cb0d3d985c58fc42f'
 
 print(Neighbor_by_cosine(book))
