@@ -2,6 +2,31 @@ const recommendService = require('../services/recommend.service');
 const pythonsController = require('../controllers/pythons.controller');
 const bookService = require('../services/books.service');
 const recommendController = {
+    trainNLP: async(req, res) => {
+        try {
+            const bookList = await bookService.getAllBookData();
+            console.log(bookList)
+            const data = await recommendService.trainList(bookList);
+            // if (data === 0) {
+            //     res.status(200).json({
+            //         message: 'Training success!',
+            //         error: 0,
+            //         data
+            //     })
+            // } else {
+            //     res.status(200).json({
+            //         message: 'Không tìm thấy sách!',
+            //         error: 1,
+            //         data
+            //     })
+            // }
+        } catch (error) {
+            // res.status(500).json({
+            //     message: `Có lỗi xảy ra! ${error.message}`,
+            //     error: 1,
+            // })
+        }
+    },
     getAll: async(req, res) => {
         try {
             const page = req.query.page ? parseInt(req.query.page) : 1
