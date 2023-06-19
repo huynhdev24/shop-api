@@ -1,5 +1,7 @@
 const Recommend = require('../models/recommends.model');
 const Book = require('../models/books.model');
+const cosineSimilarity = require('../nlp/bagofword');
+const bookService = require('../services/books.service');
 const recommendService = {
     // getAll: async({query, page, limit, sort}) => {
     //     const skip = (page - 1) * limit
@@ -95,7 +97,34 @@ const recommendService = {
         } catch (error) {
             return error;
         }
-    }
+    },
+    search: async({key, bookList}) => {
+        let trainResult = [];
+        const book_info_data = await bookService.getById(key);
+        console.log(book_info_data);
+
+        for(let i = 0; i < bookList.length; i++) {
+            let string1 = book_info_data.name;
+            let string2 = bookList[i].name;
+            let bookId = bookList[i]._id;
+            let cosineResult = cosineSimilarity(string1, string2);
+            trainResult.push({string1, string2, bookId, cosineResult});
+        }
+
+        const trainSorted = trainResult.sort((a,b) => a.cosineResult - b.cosineResult).reverse();
+        const getTopN = trainSorted.slice(0, 12);
+        console.log(getTopN);
+        //get data of book_info
+        // res.send(JSON.parse(data));
+        let listBookNLP_Final = [];
+        // listBookNLP_Final.push(book_info_data)
+        for (let i = 0; i < getTopN.length; i++) {
+            const book = await bookService.getById(getTopN[i].bookId);
+            listBookNLP_Final.push(book);
+        }
+
+        return listBookNLP_Final;
+    },
 }
 
 module.exports = recommendService;

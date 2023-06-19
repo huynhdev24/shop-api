@@ -118,8 +118,12 @@ function getCosine(A, B) {
  * @param {string} string2
  * @param {boolean} termFrequency
  * @return {*} - Trả về giá trị từ 0 đến 1. Cosin của góc giữa các đầu vào.
+ * 
+ * Nếu hàm này trả về 0 thì 2 chuỗi văn bản khác nhau hoàn toàn.
+ * Nếu hàm này trả về 1 thì 2 chuỗi văn bản giống nhau hoàn toàn.
+ * 
  */
-function cosSimilarity(string1, string2, termFrequency = false) {
+function cosineSimilarity(string1, string2, termFrequency = false) {
     let v1;
     let v2;
 
@@ -147,4 +151,4 @@ function cosSimilarity(string1, string2, termFrequency = false) {
 }
 
 
-module.exports = cosSimilarity;
+module.exports = cosineSimilarity;
