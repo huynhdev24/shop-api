@@ -92,7 +92,9 @@ function getCosine(A, B) {
         .reduce(function (pv, cv) {
             return pv + cv;
         });
-
+    
+    console.log('AB =' + AB);
+        
     //SA2 = (SUM(A^2))
     let SA2 = A.map(function (el) {
         return el * el;
@@ -101,6 +103,7 @@ function getCosine(A, B) {
             return pv + cv;
         });
 
+    console.log('SA2 = '+SA2);    
     //B2 = (SUM(B^2)
     let SB2 = B.map(function (el) {
         return el * el;
@@ -109,6 +112,8 @@ function getCosine(A, B) {
             return pv + cv;
         });
 
+    console.log('SB2 = '+SB2);    
+    
     return AB / (Math.sqrt(SA2) * Math.sqrt(SB2));
 }
 
@@ -134,6 +139,8 @@ function cosineSimilarity(string1, string2, termFrequency = false) {
         // lấy tần số char của 2 câu
         v1 = charFrequencies(string1);
         v2 = charFrequencies(string2);
+        console.log('vector 1: ' + v1);
+        console.log('vector 2: ' + v2);
     }
     else {
         // loại bỏ ký tự đặc biệt
@@ -142,11 +149,14 @@ function cosineSimilarity(string1, string2, termFrequency = false) {
         // lấy tần số term của 2 câu
         v1 = termFrequencies(string1);
         v2 = termFrequencies(string2);
+        console.log('vector 1: ' + v1);
+        console.log('vector 2: ' + v2);
     }
 
     const A = Object.values(sortObjectByKey(parseAttributesForFirstObject(v1, v2)));
     const B = Object.values(sortObjectByKey(parseAttributesForFirstObject(v2, v1)));
-
+    console.log(A);
+    console.log(B);
     return getCosine(A, B);
 }
 

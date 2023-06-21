@@ -195,6 +195,7 @@ const recommendController = {
     bagOfWords: async(req, res) => {
         try {
             const { key } = req.query
+            // const { limit } = req.query
             // const page = req.query.page ? parseInt(req.query.page) : 1
             // const limit = req.query.limit ? parseInt(req.query.limit) : 0
             // const data = await recommendService.search({key, page, limit})

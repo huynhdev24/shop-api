@@ -98,7 +98,7 @@ const recommendService = {
             return error;
         }
     },
-    search: async({key, bookList}) => {
+    search: async({key, bookList, limit}) => {
         let trainResult = [];
         const book_info_data = await bookService.getById(key);
         console.log(book_info_data);
@@ -112,7 +112,7 @@ const recommendService = {
         }
 
         const trainSorted = trainResult.sort((a,b) => a.cosineResult - b.cosineResult).reverse();
-        const getTopN = trainSorted.slice(0, 12);
+        const getTopN = trainSorted.slice(0, 30);
         console.log(getTopN);
         //get data of book_info
         // res.send(JSON.parse(data));
