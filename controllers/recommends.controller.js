@@ -190,6 +190,30 @@ const recommendController = {
                 error: 1,
             })
         }
+    },
+    // Mô hình Bag of Words bằng Javascript thuần
+    bagOfWords: async(req, res) => {
+        try {
+            const { key } = req.query
+            // const { limit } = req.query
+            // const page = req.query.page ? parseInt(req.query.page) : 1
+            // const limit = req.query.limit ? parseInt(req.query.limit) : 0
+            // const data = await recommendService.search({key, page, limit})
+            const bookList = await bookService.getAllBookData();
+            const listBookNLP_Final = await recommendService.search({key, bookList})
+            
+            res.status(200).json({
+                message: 'success',
+                error: 0,
+                listBookNLP_Final,
+            })
+          
+        } catch (error) {
+            res.status(500).json({
+                message: `Có lỗi xảy ra! ${error.message}`,
+                error: 1,
+            })
+        }
     }
 }
 
